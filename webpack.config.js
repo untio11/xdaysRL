@@ -8,6 +8,11 @@ module.exports = {
         path: __dirname + "/build",
         publicPath: "/build/"
     },
+    devServer: {
+        contentBase: __dirname,
+        compress: true,
+        port: 8080,
+    },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: [".ts", ".tsx", ".js"]
