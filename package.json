@@ -1,0 +1,33 @@
+{
+  "name": "xdaysrl",
+  "version": "1.0.0",
+  "description": "Roguelike challenge done with Jasper. Idea is to create a roguelike in x days, my theme will be The Alchemist looking for the Elixer of Eternal Life",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js --mode=production",
+    "build:dev": "webpack --config webpack.config.js --mode=development --display-error-details",
+    "watch": "webpack --config webpack.config.js --mode=development --watch",
+    "start": "node src/server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/untio11/xdaysRL.git"
+  },
+  "author": "Robin Kneepkens",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/untio11/xdaysRL/issues"
+  },
+  "homepage": "https://github.com/untio11/xdaysRL#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ts-loader": "^5.3.0",
+    "tsc-watch": "^1.0.30",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "devDependencies": {}
+}
