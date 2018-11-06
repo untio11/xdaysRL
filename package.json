@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/untio11/xdaysRL#readme",
   "dependencies": {
+    "@types/rot-js": "^0.6.4",
     "express": "^4.16.4",
+    "rot-js": "^2.0.0",
     "ts-loader": "^5.3.0",
     "tsc-watch": "^1.0.30",
     "tslint": "^5.11.0",
