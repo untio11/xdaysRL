@@ -42,10 +42,10 @@ export class DisplayManager {
 
     render(site: Site, index?: number) {
         let curr_disp = this.displays[index ? index : this.current];
-        let data = site.getData();
         for (let x = 0; x < site.width; x++) {
             for (let y = 0; y < site.height; y++) {
-                curr_disp.draw(x, y, data[x][y] ? "#" : ".");
+                let glyph = site.getTile(x, y).getGlyph();
+                curr_disp.draw(x, y, glyph.getCharacter(), glyph.getForeground(), glyph.getBackground());
             }
         }
     }
