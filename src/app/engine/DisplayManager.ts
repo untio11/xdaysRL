@@ -1,16 +1,25 @@
-import { Display, Color, ColorArray } from "rot-js";
+import { Display, Color } from "rot-js";
+import { Site } from "./Site";
 
 export class DisplayManager {
     displays: Display[];
+    current: number;
     
     constructor() {
         this.displays = [];
+        this.current = 0;
     }
 
     add(target: HTMLElement | null, properties: {}) {
         let new_disp = new Display(properties);
         if (target) target.appendChild(new_disp.getContainer());
-        return this.displays.push(new_disp) - 1;
+        this.current = this.displays.push(new_disp) - 1;
+        return this.current;
+    }
+
+    setCurrent(index: number) {
+        this.current = (index < this.displays.length) ? index : this.current;
+        return this.current == index; // Assignment went okay
     }
 
     getDisplay(index: number) {
@@ -28,6 +37,16 @@ export class DisplayManager {
             colors = "%c{" + fg + "}%b{" + bg + "}";
             // Draw the text at col 2 and row i
             this.displays[index].drawText(2, i, colors + "Hello, world!");
+        }
+    }
+
+    render(site: Site, index?: number) {
+        let curr_disp = this.displays[index ? index : this.current];
+        let data = site.getData();
+        for (let x = 0; x < site.width; x++) {
+            for (let y = 0; y < site.height; y++) {
+                curr_disp.draw(x, y, data[x][y] ? "#" : ".");
+            }
         }
     }
 }
