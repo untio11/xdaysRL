@@ -1,29 +1,35 @@
-import { Display, Color } from "rot-js";
+import { Color } from "rot-js";
 import { Site } from "./Site";
+import { ScreenOptions, Screen } from './Screen';
 
 export class DisplayManager {
-    displays: Display[];
+    screens: Screen[];
     current: number;
     
     constructor() {
-        this.displays = [];
+        this.screens = [];
         this.current = 0;
     }
 
-    add(target: HTMLElement | null, properties: {}) {
-        let new_disp = new Display(properties);
-        if (target) target.appendChild(new_disp.getContainer());
-        this.current = this.displays.push(new_disp) - 1;
+    add(target: HTMLElement | null, properties: ScreenOptions) {
+        let new_screen = new Screen(properties);
+        if (target) target.appendChild(new_screen.display.getContainer());
+        this.current = this.screens.push(new_screen) - 1;
         return this.current;
     }
 
-    setCurrent(index: number) {
-        this.current = (index < this.displays.length) ? index : this.current;
+    switchTo(index: number) {
+        if (0 <= index && index < this.screens.length) {
+            this.screens[this.current].exit()
+            this.screens[index].enter()
+            this.current = index;
+        }
+
         return this.current == index; // Assignment went okay
     }
 
     getDisplay(index: number) {
-        return this.displays[index];
+        return this.screens[index];
     }
 
     test(index: number) {
@@ -36,16 +42,16 @@ export class DisplayManager {
             // Create the color format specifier.
             colors = "%c{" + fg + "}%b{" + bg + "}";
             // Draw the text at col 2 and row i
-            this.displays[index].drawText(2, i, colors + "Hello, world!");
+            this.screens[index].display.drawText(2, i, colors + "Hello, world!");
         }
     }
 
     render(site: Site, index?: number) {
-        let curr_disp = this.displays[index ? index : this.current];
+        let curr_disp = this.screens[index ? index : this.current];
         for (let x = 0; x < site.width; x++) {
             for (let y = 0; y < site.height; y++) {
                 let glyph = site.getTile(x, y).getGlyph();
-                curr_disp.draw(x, y, glyph.getCharacter(), glyph.getForeground(), glyph.getBackground());
+                curr_disp.display.draw(x, y, glyph.getCharacter(), glyph.getForeground(), glyph.getBackground());
             }
         }
     }
