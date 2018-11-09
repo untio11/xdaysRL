@@ -3,15 +3,20 @@ import { Site } from "./Site";
 
 export abstract class Screen { // For now it's nothing much, but I guess I might need it later
     readonly display: Display;
+    private dimensions: DisplayOptions; // Will probaly change i guess
 
     constructor(properties: ScreenOptions) {
-        let disp_props: DisplayOptions = {width: properties.width, height: properties.height};
-        this.display = new Display(disp_props);
+        this.dimensions = {width: properties.width, height: properties.height};
+        this.display = new Display(this.dimensions);
     }
 
     abstract enter(): void;
 
     abstract exit(): void;
+
+    getDimensions() {
+        return this.dimensions;
+    }
 
     abstract handleInput(eventName: string, event: Event): void;
 }
@@ -70,7 +75,7 @@ export class PlayScreen extends Screen {
     }
 }
 
-interface DisplayOptions {
+export interface DisplayOptions {
     width: number,
     height: number
 }
