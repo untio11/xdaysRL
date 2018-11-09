@@ -21,9 +21,10 @@ export class Site {
         for (let i = 0; i < options.smoothness; i++) {
             this.map.create();
         }
+        
         this.map.create((x: number, y: number, wall: number) => (
                 this.map_data[x][y] = wall ? Tile.wallTile : Tile.floorTile
-            ))
+        ));
     }
 
     getData() {

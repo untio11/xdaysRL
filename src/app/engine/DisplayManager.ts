@@ -1,6 +1,6 @@
 import { Color } from "rot-js";
 import { Site } from "./Site";
-import { ScreenOptions, Screen } from './Screen';
+import { ScreenOptions, PlayScreen, Screen } from './Screen';
 
 export class DisplayManager {
     screens: Screen[];
@@ -12,7 +12,7 @@ export class DisplayManager {
     }
 
     add(target: HTMLElement | null, properties: ScreenOptions) {
-        let new_screen = new Screen(properties);
+        let new_screen = new PlayScreen(properties);
         if (target) target.appendChild(new_screen.display.getContainer());
         this.current = this.screens.push(new_screen) - 1;
         return this.current;
@@ -46,13 +46,25 @@ export class DisplayManager {
         }
     }
 
-    render(site: Site, index?: number) {
-        let curr_disp = this.screens[index ? index : this.current];
+    render() {
+        let curr_disp = this.screens[this.current] as PlayScreen; // Later on we'll probably have different types, but whatever.
+        let site = curr_disp.getSite();
         for (let x = 0; x < site.width; x++) {
             for (let y = 0; y < site.height; y++) {
                 let glyph = site.getTile(x, y).getGlyph();
                 curr_disp.display.draw(x, y, glyph.getCharacter(), glyph.getForeground(), glyph.getBackground());
             }
         }
+    }
+
+    bindSiteToScreen(site: Site, index: number) {
+        let screen = this.screens[index] as PlayScreen;
+        screen.setSite(site);
+    }
+
+    bindEventToScreen(event: string) {
+        window.addEventListener(event, (e) => (
+            this.screens[this.current].handleInput(event, e)
+        )); 
     }
 }
