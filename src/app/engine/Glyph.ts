@@ -3,10 +3,11 @@ export class Glyph {
     private foreground: string;
     private background: string;
 
-    constructor(char?: string, fg?: string, bg?: string) {
-        this.character = char || ' ';
-        this.foreground = fg || 'white';
-        this.background = bg || 'black';
+    constructor(properties?: GlyphProperties) {
+        properties = properties || {};
+        this.character = properties.char || ' ';
+        this.foreground = properties.fg || 'white';
+        this.background = properties.bg || 'black';
     }
 
     getCharacter() {
@@ -20,4 +21,10 @@ export class Glyph {
     getBackground() {
         return this.background;
     }
+}
+
+export interface GlyphProperties {
+    fg?: string,
+    bg?: string,
+    char?: string
 }

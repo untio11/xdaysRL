@@ -57,7 +57,6 @@ export class PlayScreen extends Screen {
                 default:
                     break;
             }
-            console.log(this.x_center, this.y_center);
         }
     }
 
