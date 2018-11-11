@@ -1,33 +1,25 @@
 import { Glyph, GlyphProperties } from "./Glyph";
-import { Action } from './actions/Actions';
+import { position } from "./Site";
 
 export class Entity extends Glyph {
     name: string;
-    x: number;
-    y: number;
-    action_list: {[property_name: string]: Action} = {};
-    
+    position: position;
 
     constructor(properties: EntityProperties) {
         super(properties);
         this.name = properties.name || "Placeholder";
-        this.x = properties.x || 0;
-        this.y = properties.y || 0;
-
-        let actions = properties.actions || [];
-        
-        for (let action of actions) {
-            this.action_list[action.name] = action.init();
-        }
+        this.position = {
+            x: properties.x || 0,
+            y: properties.y || 0
+        };
     }
 
-    setPos(x?: number, y?: number) {
-        this.x = x || this.x;
-        this.y = y || this.y;
+    setPos(new_pos: position) {
+        this.position = new_pos;
     }
 
     getPos() {
-        return {x: this.x, y: this.y};
+        return this.position;
     }
 }
 
@@ -35,5 +27,4 @@ export interface EntityProperties extends GlyphProperties {
     name?: string;
     x?: number;
     y?: number;
-    actions?: Action[];
 }

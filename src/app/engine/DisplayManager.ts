@@ -1,35 +1,42 @@
 import { Color, DisplayOptions } from "rot-js";
-import { Site } from "./Site";
+import { Site, position } from "./Site";
 import { ScreenOptions, PlayScreen, Screen } from './Screen';
 
 export class DisplayManager {
-    screens: Screen[];
-    current: number;
+    playScreen: PlayScreen | undefined;
+    current: Screen | undefined;
+    count: number;
     
     constructor() {
-        this.screens = [];
-        this.current = 0;
+        this.playScreen = undefined;
+        this.current = undefined;
+        this.count = 0;
     }
 
-    add(target: HTMLElement | null, properties: ScreenOptions) {
-        let new_screen = new PlayScreen(properties);
-        if (target) target.appendChild(new_screen.display.getContainer());
-        this.current = this.screens.push(new_screen) - 1;
+    add(properties: ScreenOptions) {
+        switch (properties.type) {
+            case 'PlayScreen':
+                this.playScreen = new PlayScreen(properties);
+                this.current = this.playScreen;
+                this.count++;
+                break;
+            default:
+                break;
+        }
+
+        if (properties.target && this.current) properties.target.appendChild(this.current.display.getContainer());
+
         return this.current;
     }
 
-    switchTo(index: number) {
-        if (0 <= index && index < this.screens.length) {
-            this.screens[this.current].exit()
-            this.screens[index].enter()
-            this.current = index;
-        }
-
-        return this.current == index; // Assignment went okay
+    switchTo(screen: Screen) {
+        if (this.current) this.current.exit();
+        screen.enter();
+        this.current = screen;
     }
 
-    getDisplay(index: number) {
-        return this.screens[index];
+    getCurrentScreen() {
+        return this.current;
     }
 
     test(index: number) {
@@ -42,44 +49,32 @@ export class DisplayManager {
             // Create the color format specifier.
             colors = "%c{" + fg + "}%b{" + bg + "}";
             // Draw the text at col 2 and row i
-            this.screens[index].display.drawText(2, i, colors + "Hello, world!");
+            if (this.current) this.current.display.drawText(2, i, colors + "Hello, world!");
         }
     }
 
     render() {
-        let curr_disp = this.screens[this.current] as PlayScreen; // Later on we'll probably have different types, but whatever.
-        let site = curr_disp.getSite();
-        let site_width = site.getDimensions().width;
-        let site_height = site.getDimensions().height;
-        let screen_width = curr_disp.getDimensions().width;
-        let screen_height = curr_disp.getDimensions().height;
-        let topLeftX = Math.max(0, curr_disp.center.x - (screen_width / 2));
-        topLeftX = Math.min(topLeftX, site_width - screen_width);
-        let topLeftY = Math.max(0, curr_disp.center.y - (screen_height / 2));
-        topLeftY = Math.min(topLeftY, site_height - screen_height);
-
-
-        for (let x = topLeftX; x < topLeftX + site_width; x++) {
-            for (let y = topLeftY; y < topLeftY + site_height; y++) {
-                let glyph = site.getTile(x, y).getGlyph();
-                curr_disp.display.draw(x - topLeftX, y - topLeftY, glyph.getCharacter(), glyph.getForeground(), glyph.getBackground());
-            }
-        }
-
-        curr_disp.display.draw(curr_disp.center.x - topLeftX, curr_disp.center.y - topLeftY, '@');
+        if (this.current) this.current.render();
     }
 
-    bindSiteToScreen(site: Site, index: number) {
-        let screen = this.screens[index] as PlayScreen;
+    bindSiteToScreen(site: Site) {
+        if (!(this.current instanceof PlayScreen)) return false;
+        let screen = this.current;
         screen.setSite(site);
+        return true;
     }
 
     bindEventToScreen(event: string) {
+        if (this.current == undefined) return false;
+        let screen = this.current;
+
         window.addEventListener(event, (e) => (
-            this.screens[this.current].handleInput(event, e)
+            screen.handleInput(event, e)
         ));
         window.addEventListener(event, (e) => (
             this.render()
-        )); 
+        ));
+
+        return true;
     }
 }

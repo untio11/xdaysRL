@@ -14,6 +14,8 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
 
     abstract exit(): void;
 
+    abstract render(): void;
+
     getDimensions() {
         return this.dimensions;
     }
@@ -37,6 +39,29 @@ export class PlayScreen extends Screen {
 
     exit() {
         console.log("exited a playscreen");
+    }
+
+    render() {
+        let { width: site_width, height: site_height } = this.current_site.getDimensions();
+        let screen_width = this.getDimensions().width;
+        let screen_height = this.getDimensions().height;
+        let topLeft: position = {
+            x: Math.max(0, this.center.x - (screen_width / 2)),
+            y: Math.max(0, this.center.y - (screen_height / 2))
+        };
+
+        topLeft.x = Math.min(topLeft.x, site_width - screen_width);
+        topLeft.y = Math.min(topLeft.y, site_height - screen_height);
+
+
+        for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
+            for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
+                let glyph = this.current_site.getTile({ x, y }).getGlyph();
+                this.display.draw(x - topLeft.x, y - topLeft.y, glyph.getCharacter(), glyph.getForeground(), glyph.getBackground());
+            }
+        }
+
+        this.display.draw(this.center.x - topLeft.x, this.center.y - topLeft.y, '@');
     }
 
     handleInput(eventName: string, event: KeyboardEvent) {
@@ -79,9 +104,11 @@ export interface DisplayOptions {
     height: number,
     fontSize?: number,
     bg?: string,
-    forceSquareRatio?: boolean
+    forceSquareRatio?: boolean,
+    target?: HTMLElement
 }
 
 export interface ScreenOptions extends DisplayOptions {
-    site: Site
+    site: Site,
+    type: string
 }

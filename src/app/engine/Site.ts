@@ -31,12 +31,27 @@ export class Site {
         return this.map_data;
     }
 
-    getTile(x: number, y: number) {
+    getTile(pos: position) {
+        let {x, y} = pos;
         if (0 <= x && x < this.width && 0 <= y && y < this.height) {
             return this.map_data[x][y];
         } else {
             return Tile.nullTile;
         }
+    }
+    
+    getRandomFloorTile() {
+        let pos: position = {
+            x: Math.floor(Math.random() * this.width), 
+            y: Math.floor(Math.random() * this.height)
+        };
+
+        while (this.getTile(pos) != Tile.floorTile) {
+            pos.x = Math.floor(Math.random() * this.width);
+            pos.y = Math.floor(Math.random() * this.height);
+        }
+
+        return this.getTile(pos);
     }
 
     getDimensions() {
