@@ -12,19 +12,33 @@ export class Site {
         this.width = options.width | 7;
         this.height = options.height | 7;
 
-        this.map = new Map.Cellular(this.width, this.height);
-        this.map.randomize(0.5);
+        this.map = new Map.Cellular(this.width, this.height, {born: [3], topology:8, survive: [0, 1, 2, 3, 4, 5, 6, 7, 8]});
+        
         this.map_data = range(this.width).map(() => (
             new Array(this.height).map(() => Tile.nullTile)
         ));
-
+        
+        
         for (let i = 0; i < options.smoothness; i++) {
+            for (let i = 0; i < 10; i++) {
+                this.drawPlus(Math.floor(Math.random() * (this.width - 2)) + 1, Math.floor(Math.random() * (this.height - 2)) + 1);
+            }
             this.map.create();
         }
-        
+        for (let i = 0; i < 10; i++) {
+            this.drawPlus(Math.floor(Math.random() * (this.width - 2)) + 1, Math.floor(Math.random() * (this.height - 2)) + 1);
+        }
         this.map.create((x: number, y: number, wall: number) => (
                 this.map_data[x][y] = wall ? Tile.wallTile : Tile.floorTile
         ));
+    }
+
+    drawPlus(x: number, y: number) {
+        this.map.set(x, y, 1);
+        this.map.set(x + 1, y, 1);
+        this.map.set(x - 1, y, 1);
+        this.map.set(x, y + 1, 1);
+        this.map.set(x, y - 1, 1);
     }
 
     getData() {

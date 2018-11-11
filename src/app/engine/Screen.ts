@@ -35,7 +35,7 @@ export class PlayScreen extends Screen {
         this.player = new Hero(HeroTemplate);
         this.current_site = properties.site;
         let spawn = this.current_site.getRandomFloorPosition();
-        this.player.setPos(spawn);
+        this.player.setPos({x: 32, y: 15});
         this.focus = this.player;
     }
 

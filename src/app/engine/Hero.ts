@@ -9,7 +9,6 @@ export class Hero extends Entity implements Moveable {
     }
     
     tryMove(move: {dx: number, dy: number}, site: Site): boolean { // Should change to a new implementation after mixing.
-        console.log("Original trymove");
         return true
     }
 
