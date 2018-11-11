@@ -40,7 +40,7 @@ export class Site {
         }
     }
     
-    getRandomFloorTile() {
+    getRandomFloorPosition() {
         let pos: position = {
             x: Math.floor(Math.random() * this.width), 
             y: Math.floor(Math.random() * this.height)
@@ -51,7 +51,7 @@ export class Site {
             pos.y = Math.floor(Math.random() * this.height);
         }
 
-        return this.getTile(pos);
+        return pos;
     }
 
     getDimensions() {

@@ -1,5 +1,7 @@
 import { Display } from 'rot-js';
 import { Site, position } from "./Site";
+import { Hero, HeroTemplate } from "./Hero";
+import { Entity } from "./Entity";
 
 export abstract class Screen { // For now it's nothing much, but I guess I might need it later
     readonly display: Display;
@@ -24,13 +26,17 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
 }
 
 export class PlayScreen extends Screen {
-    center: position;
+    focus: Entity;
+    player: Hero;
     current_site: Site;
 
     constructor(properties: ScreenOptions) {
         super(properties);
+        this.player = new Hero(HeroTemplate);
         this.current_site = properties.site;
-        this.center = {x: 0, y: 0};
+        let spawn = this.current_site.getRandomFloorPosition();
+        this.player.setPos(spawn);
+        this.focus = this.player;
     }
 
     enter() {
@@ -46,8 +52,8 @@ export class PlayScreen extends Screen {
         let screen_width = this.getDimensions().width;
         let screen_height = this.getDimensions().height;
         let topLeft: position = {
-            x: Math.max(0, this.center.x - (screen_width / 2)),
-            y: Math.max(0, this.center.y - (screen_height / 2))
+            x: Math.max(0, this.focus.position.x - (screen_width / 2)),
+            y: Math.max(0, this.focus.position.y - (screen_height / 2))
         };
 
         topLeft.x = Math.min(topLeft.x, site_width - screen_width);
@@ -56,28 +62,40 @@ export class PlayScreen extends Screen {
 
         for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
-                let glyph = this.current_site.getTile({ x, y }).getGlyph();
-                this.display.draw(x - topLeft.x, y - topLeft.y, glyph.getCharacter(), glyph.getForeground(), glyph.getBackground());
+                let tile = this.current_site.getTile({ x, y });
+                this.display.draw(
+                    x - topLeft.x,
+                    y - topLeft.y,
+                    tile.getCharacter(),
+                    tile.getForeground(),
+                    tile.getBackground()
+                );
             }
         }
 
-        this.display.draw(this.center.x - topLeft.x, this.center.y - topLeft.y, '@');
+        this.display.draw(
+            this.focus.position.x - topLeft.x,
+            this.focus.position.y - topLeft.y,
+            this.focus.getCharacter(),
+            this.focus.getForeground(),
+            this.focus.getBackground()
+        );
     }
 
     handleInput(eventName: string, event: KeyboardEvent) {
         if (eventName == "keydown") {
             switch (event.code) {
                 case 'ArrowUp':
-                    this.moveCamera(0, -1);
+                    this.move(0, -1);
                     break;
                 case 'ArrowDown':
-                    this.moveCamera(0, 1);
+                    this.move(0, 1);
                     break;
                 case 'ArrowLeft':
-                    this.moveCamera(-1, 0);
+                    this.move(-1, 0);
                     break;
                 case 'ArrowRight':
-                    this.moveCamera(1, 0);
+                    this.move(1, 0);
                     break;
                 default:
                     break;
@@ -85,9 +103,13 @@ export class PlayScreen extends Screen {
         }
     }
 
-    moveCamera(dx: number, dy:number) {
-        this.center.x += (0 <= this.center.x + dx && this.center.x + dx < this.current_site.width) ? dx : 0;
-        this.center.y += (0 <= this.center.y + dy && this.center.y + dy < this.current_site.height) ? dy : 0;
+    move(dx: number, dy: number) {
+        let new_pos = {
+            x: this.player.position.x + dx,
+            y: this.player.position.y + dy
+        }
+
+        this.player.tryMove(new_pos, this.current_site);
     } 
 
     setSite(site: Site) {

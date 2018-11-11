@@ -27,4 +27,5 @@ export interface EntityProperties extends GlyphProperties {
     name?: string;
     x?: number;
     y?: number;
+    mixins: any[] 
 }

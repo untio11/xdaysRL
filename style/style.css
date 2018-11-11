@@ -1,6 +1,7 @@
 body {
     background-color: #343434;
     font-family: monospace;
+    overflow: hidden;
 }
 
 #app {
