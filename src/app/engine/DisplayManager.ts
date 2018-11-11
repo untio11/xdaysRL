@@ -53,9 +53,9 @@ export class DisplayManager {
         let site_height = site.getDimensions().height;
         let screen_width = curr_disp.getDimensions().width;
         let screen_height = curr_disp.getDimensions().height;
-        let topLeftX = Math.max(0, curr_disp.x_center - (screen_width / 2));
+        let topLeftX = Math.max(0, curr_disp.center.x - (screen_width / 2));
         topLeftX = Math.min(topLeftX, site_width - screen_width);
-        let topLeftY = Math.max(0, curr_disp.y_center - (screen_height / 2));
+        let topLeftY = Math.max(0, curr_disp.center.y - (screen_height / 2));
         topLeftY = Math.min(topLeftY, site_height - screen_height);
 
 
@@ -66,7 +66,7 @@ export class DisplayManager {
             }
         }
 
-        curr_disp.display.draw(curr_disp.x_center - topLeftX, curr_disp.y_center - topLeftY, '@');
+        curr_disp.display.draw(curr_disp.center.x - topLeftX, curr_disp.center.y - topLeftY, '@');
     }
 
     bindSiteToScreen(site: Site, index: number) {

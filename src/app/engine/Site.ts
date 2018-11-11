@@ -43,3 +43,8 @@ export class Site {
         return {width: this.width, height: this.height};
     }
 }
+
+export interface position {
+    x: number;
+    y: number;
+}

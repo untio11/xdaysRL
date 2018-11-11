@@ -1,13 +1,13 @@
 import { Display } from 'rot-js';
-import { Site } from "./Site";
+import { Site, position } from "./Site";
 
 export abstract class Screen { // For now it's nothing much, but I guess I might need it later
     readonly display: Display;
-    private dimensions: DisplayOptions; // Will probaly change i guess
+    private dimensions: {width: number, height: number}; // Will probaly change i guess
 
     constructor(properties: ScreenOptions) {
+        this.display = new Display(properties);
         this.dimensions = {width: properties.width, height: properties.height};
-        this.display = new Display(this.dimensions);
     }
 
     abstract enter(): void;
@@ -22,13 +22,13 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
 }
 
 export class PlayScreen extends Screen {
-    x_center: number = 0;
-    y_center: number = 0;
+    center: position;
     current_site: Site;
 
     constructor(properties: ScreenOptions) {
         super(properties);
         this.current_site = properties.site;
+        this.center = {x: 0, y: 0};
     }
 
     enter() {
@@ -61,8 +61,8 @@ export class PlayScreen extends Screen {
     }
 
     moveCamera(dx: number, dy:number) {
-        this.x_center += (0 <= this.x_center + dx && this.x_center + dx < this.current_site.width) ? dx : 0;
-        this.y_center += (0 <= this.y_center + dy && this.y_center + dy < this.current_site.height) ? dy : 0;
+        this.center.x += (0 <= this.center.x + dx && this.center.x + dx < this.current_site.width) ? dx : 0;
+        this.center.y += (0 <= this.center.y + dy && this.center.y + dy < this.current_site.height) ? dy : 0;
     } 
 
     setSite(site: Site) {
@@ -76,7 +76,10 @@ export class PlayScreen extends Screen {
 
 export interface DisplayOptions {
     width: number,
-    height: number
+    height: number,
+    fontSize?: number,
+    bg?: string,
+    forceSquareRatio?: boolean
 }
 
 export interface ScreenOptions extends DisplayOptions {
