@@ -86,31 +86,38 @@ export class PlayScreen extends Screen {
         if (eventName == "keydown") {
             switch (event.code) {
                 case 'ArrowUp':
-                    this.move(0, -1);
+                case 'Numpad8':
+                    this.player.tryMove({dx: 0, dy: -1}, this.current_site);
                     break;
                 case 'ArrowDown':
-                    this.move(0, 1);
+                case 'Numpad2':
+                    this.player.tryMove({dx: 0, dy: 1}, this.current_site);
                     break;
                 case 'ArrowLeft':
-                    this.move(-1, 0);
+                case 'Numpad4':
+                    this.player.tryMove({dx: -1, dy: 0}, this.current_site);
                     break;
                 case 'ArrowRight':
-                    this.move(1, 0);
+                case 'Numpad6':
+                    this.player.tryMove({dx: 1, dy: 0}, this.current_site);
+                    break;
+                case 'Numpad7':
+                    this.player.tryMove({dx: -1, dy: -1}, this.current_site);
+                    break;
+                case 'Numpad9':
+                    this.player.tryMove({dx: 1, dy: -1}, this.current_site);
+                    break;
+                case 'Numpad1':
+                    this.player.tryMove({dx: -1, dy: 1}, this.current_site);
+                    break;
+                case 'Numpad3':
+                    this.player.tryMove({dx: 1, dy: 1}, this.current_site);
                     break;
                 default:
                     break;
             }
         }
     }
-
-    move(dx: number, dy: number) {
-        let new_pos = {
-            x: this.player.position.x + dx,
-            y: this.player.position.y + dy
-        }
-
-        this.player.tryMove(new_pos, this.current_site);
-    } 
 
     setSite(site: Site) {
         this.current_site = site;

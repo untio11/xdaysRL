@@ -8,10 +8,14 @@ export class Hero extends Entity implements Moveable {
         applyMixins(Hero, properties.mixins);
     }
     
-    tryMove(target: position, site: Site) { // Should change to a new implementation after mixing.
+    tryMove(move: {dx: number, dy: number}, site: Site): boolean { // Should change to a new implementation after mixing.
         console.log("Original trymove");
         return true
     }
+
+    newPos(dx: number, dy: number): position { // placeholder too
+        return this.position;
+    };
 }
 
 
