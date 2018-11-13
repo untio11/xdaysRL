@@ -45,20 +45,20 @@ export class Site {
         return this.map_data;
     }
 
-    getTile(pos: position) {
-        let {x, y} = pos;
+    getTile(pos: position | {x: number, y: number}) {
+        let { x, y } = pos;
         if (0 <= x && x < this.width && 0 <= y && y < this.height) {
             return this.map_data[x][y];
         } else {
             return Tile.nullTile;
         }
     }
-    
+
     getRandomFloorPosition() {
-        let pos: position = {
-            x: Math.floor(Math.random() * this.width), 
-            y: Math.floor(Math.random() * this.height)
-        };
+        let pos: position = new position (
+            Math.floor(Math.random() * this.width), 
+            Math.floor(Math.random() * this.height)
+        );
 
         while (this.getTile(pos) != Tile.floorTile) {
             pos.x = Math.floor(Math.random() * this.width);
@@ -73,7 +73,21 @@ export class Site {
     }
 }
 
-export interface position {
+/**
+ * Represents a position with x, y as coordinates
+ */
+export class position {
     x: number;
     y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+
+    add(dx: number, dy: number) {
+        this.x += dx;
+        this.y += dy;
+        return this;
+    }
 }

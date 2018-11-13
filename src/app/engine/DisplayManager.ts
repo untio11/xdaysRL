@@ -2,6 +2,9 @@ import { Color, DisplayOptions } from "rot-js";
 import { Site, position } from "./Site";
 import { ScreenOptions, PlayScreen, Screen } from './Screen';
 
+/**
+ * A manager for handiling Screens. It should keep track of multiple screens and binding of sites and event listeners goes through this class.
+ */
 export class DisplayManager {
     /**
      * For now we only have one screen, which is the playscreen, but later we might want to add more screens.
