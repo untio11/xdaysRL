@@ -9,9 +9,11 @@ export class DisplayManager {
     /**
      * For now we only have one screen, which is the playscreen, but later we might want to add more screens.
      */
-    playScreen: PlayScreen | undefined; // Current playscreen
-    current: Screen | undefined; // Pointer to the current screen
-    count: number; // For counting the amount of screens
+    playScreen: PlayScreen | undefined; 
+    /** Pointer to the current screen. */
+    current: Screen | undefined;
+    /** For counting the amount of screens. */
+    count: number;
     
     constructor() {
         this.playScreen = undefined;

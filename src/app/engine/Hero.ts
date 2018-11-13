@@ -14,7 +14,7 @@ export class Hero extends Entity {
 
 const HeroTemplate: EntityProperties = {
     char: '@',
-    mixins: ["Moveable"],
+    mixins: ["Moveable", "Damagable"],
     fg: 'white',
     name: 'Player'
 }

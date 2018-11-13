@@ -20,7 +20,7 @@ export class Moveable implements Mixin {
      * @param site Contains a reference to the site this entity moves on.
      * @returns True if the move succeeded, false otherwise.
      */
-    execute(move: {dx: number, dy: number}, site: Site): boolean {
+    tryMove(move: {dx: number, dy: number}, site: Site): boolean {
         let target_pos = this.newPos(move.dx, move.dy);
         let target_tile = site.getTile(target_pos);
         if (target_tile.walkable) {

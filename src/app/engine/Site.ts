@@ -2,12 +2,19 @@ import { Map } from 'rot-js';
 import { range } from "lodash";
 import { Tile } from "./Tile";
 
+/**
+ * For storing a map, together with some helper functions around it.
+ */
 export class Site {
     private map: Map.Cellular;
     private map_data: Tile[][];
     readonly height: number;
     readonly width: number;
 
+    /**
+     * 
+     * @param options Simple object to determine the height, width and smootheness of the map.
+     */
     constructor(options: {width: number, height: number, smoothness: number}) {
         this.width = options.width | 7;
         this.height = options.height | 7;
@@ -33,6 +40,11 @@ export class Site {
         ));
     }
 
+    /**
+     * Draw a '+' centered ad (x,y). Mostly for testing right now.
+     * @param x Coordinate
+     * @param y Coordinate
+     */
     drawPlus(x: number, y: number) {
         this.map.set(x, y, 1);
         this.map.set(x + 1, y, 1);
@@ -41,10 +53,14 @@ export class Site {
         this.map.set(x, y - 1, 1);
     }
 
+    /** @returns An array of tiles. */
     getData() {
         return this.map_data;
     }
 
+    /** Get the tile at a given position
+     * @param pos Can either be a position object or given as a simple {x, y} object.
+     */
     getTile(pos: position | {x: number, y: number}) {
         let { x, y } = pos;
         if (0 <= x && x < this.width && 0 <= y && y < this.height) {
@@ -54,6 +70,7 @@ export class Site {
         }
     }
 
+    /** @returns A random tile containing a floor. */
     getRandomFloorPosition() {
         let pos: position = new position (
             Math.floor(Math.random() * this.width), 
@@ -68,6 +85,9 @@ export class Site {
         return pos;
     }
 
+    /**
+     * @returns The dimensions of this site in the form {width, height}.
+     */
     getDimensions() {
         return {width: this.width, height: this.height};
     }
@@ -85,9 +105,15 @@ export class position {
         this.y = y;
     }
 
+    /**
+     * Moves the current point according to the displacement.
+     * @param dx displacement in x dir
+     * @param dy displacement in y dir
+     */
     add(dx: number, dy: number) {
-        this.x += dx;
-        this.y += dy;
-        return this;
+        return new position(
+            this.x + dx,
+            this.y + dy
+        );
     }
 }

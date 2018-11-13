@@ -1,7 +1,7 @@
 import { Glyph, GlyphProperties } from "./Glyph";
 import { position } from "./Site";
 import { MixinContainer } from "./Mixins/Mixins";
-import { Mixins } from "./Mixins/index";
+import { Mixins } from "./Mixins/Index";
 
 /**
  * Base class for all entities. Extends glyph because all entities are to be represented by a glyph.

@@ -8,8 +8,6 @@ export interface Mixin {
     readonly id: string;
     /** The entity it acts upon. */
     owner: Entity;
-    /** To actually implement the mixin and use it. */
-    execute: (...params: any) => any;
 }
 
 /**
