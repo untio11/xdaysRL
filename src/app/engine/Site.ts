@@ -1,6 +1,7 @@
 import { Map } from 'rot-js';
 import { range } from "lodash";
 import { Tile } from "./Tile";
+import { Entity } from "./Entity";
 
 /**
  * For storing a map, together with some helper functions around it.
@@ -10,6 +11,7 @@ export class Site {
     private map_data: Tile[][];
     readonly height: number;
     readonly width: number;
+    entities: Entity[];
 
     /**
      * 
@@ -38,6 +40,8 @@ export class Site {
         this.map.create((x: number, y: number, wall: number) => (
                 this.map_data[x][y] = wall ? Tile.wallTile : Tile.floorTile
         ));
+
+        this.entities = [];
     }
 
     /**
@@ -99,10 +103,16 @@ export class Site {
 export class position {
     x: number;
     y: number;
+    site: Site | undefined;
 
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, site?: Site) {
         this.x = x;
         this.y = y;
+        this.site = site;
+    }
+
+    setSite(site: Site) {
+        this.site = site;
     }
 
     /**
@@ -113,7 +123,8 @@ export class position {
     add(dx: number, dy: number) {
         return new position(
             this.x + dx,
-            this.y + dy
+            this.y + dy,
+            this.site
         );
     }
 }

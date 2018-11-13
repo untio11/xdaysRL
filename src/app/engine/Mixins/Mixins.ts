@@ -30,4 +30,8 @@ export class MixinContainer {
     push(mixin: any) {
         this[mixin.id] = mixin;
     }
+
+    pop(id: string) {
+        delete this.id;
+    }
 }

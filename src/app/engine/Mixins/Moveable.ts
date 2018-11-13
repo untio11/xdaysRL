@@ -8,9 +8,12 @@ import { Entity } from "../Entity";
 export class Moveable implements Mixin {
     readonly id: string = 'Movable';
     owner: Entity;
+    speed: number;
 
-    constructor(owner: Entity) {
+    constructor(owner: Entity, properties?: {speed: number}) {
         this.owner = owner;
+        if (properties) this.speed = properties.speed;
+        else this.speed = 100;
         return this;
     }
 

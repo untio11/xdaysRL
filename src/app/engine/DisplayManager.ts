@@ -103,11 +103,11 @@ export class DisplayManager {
      * @return True if the assignment succeeded, false otherwise.
      */
     bindEventToScreen(event: string) {
-        if (this.current == undefined) return false;
-        let screen = this.current;
+        if (this.playScreen == undefined) return false;
+        let screen = this.playScreen;
 
         window.addEventListener(event, (e) => (
-            screen.handleInput(event, e)
+            screen.player.act(event, e as KeyboardEvent)
         ));
 
         return true;

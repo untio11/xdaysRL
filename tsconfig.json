@@ -5,12 +5,16 @@
     "outDir": "/build/",
     "noImplicitAny": true,
     "module": "es6",            // Compatible with both Node.js and browser
-    "target": "es5",            // Compatible with older browsers
+    "target": "es6",            // Compatible with older browsers
     "moduleResolution": "node", // Tell tsc to look in node_modules for modules
     "sourceMap": true,          // Creates *.js.map files
     "jsx": "react",             // Causes inline XML (JSX code) to be expanded
     "strict": true,             // Strict types, eg. prohibits `var x=0; x=null`
     "alwaysStrict": true,        // Enable JavaScript's "use strict" mode
-    "allowJs": true
+    "allowJs": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   },
 }

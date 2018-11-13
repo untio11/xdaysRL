@@ -26,8 +26,6 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
     getDimensions() {
         return this.dimensions;
     }
-
-    abstract handleInput(eventName: string, event: Event): void;
 }
 
 /**
@@ -35,6 +33,7 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
  */
 export class PlayScreen extends Screen {
     focus: Entity;
+    /** I Think keeping track of the hero here should be okay, as that will make switching sites a breeze. */
     player: Hero;
     current_site: Site;
 
@@ -44,8 +43,8 @@ export class PlayScreen extends Screen {
      */
     constructor(properties: ScreenOptions) {
         super(properties);
-        this.player = new Hero(HeroTemplate);
         this.current_site = properties.site;
+        this.player = new Hero(HeroTemplate, this.current_site);
         let spawn = this.current_site.getRandomFloorPosition();
         this.player.setPos(spawn);
         this.focus = this.player;
@@ -102,52 +101,6 @@ export class PlayScreen extends Screen {
     }
 
     /**
-     * Map the event to an action. Might externalize this.
-     * @param eventName 
-     * @param event 
-     */
-    handleInput(eventName: string, event: KeyboardEvent) {
-        if (eventName == "keydown") {
-            switch (event.code) {
-                case 'ArrowUp':
-                case 'Numpad8':
-                    this.player.mixins['Movable'].tryMove({dx: 0, dy: -1}, this.current_site);
-                    break;
-                case 'ArrowDown':
-                case 'Numpad2':
-                    this.player.mixins['Movable'].tryMove({dx: 0, dy: 1}, this.current_site);
-                    break;
-                case 'ArrowLeft':
-                case 'Numpad4':
-                    this.player.mixins['Movable'].tryMove({dx: -1, dy: 0}, this.current_site);
-                    break;
-                case 'ArrowRight':
-                case 'Numpad6':
-                    this.player.mixins['Movable'].tryMove({dx: 1, dy: 0}, this.current_site);
-                    break;
-                case 'Numpad7':
-                    this.player.mixins['Movable'].tryMove({dx: -1, dy: -1}, this.current_site);
-                    break;
-                case 'Numpad9':
-                    this.player.mixins['Movable'].tryMove({dx: 1, dy: -1}, this.current_site);
-                    break;
-                case 'Numpad1':
-                    this.player.mixins['Movable'].tryMove({dx: -1, dy: 1}, this.current_site);
-                    break;
-                case 'Numpad3':
-                    this.player.mixins['Movable'].tryMove({dx: 1, dy: 1}, this.current_site);
-                    break;
-                default:
-                    this.player.mixins["Damagable"].takeHit(1);
-                    console.log(this.player.mixins["Damagable"].getHp());
-                    break;
-            }
-        }
-
-        this.render();
-    }
-
-    /**
      * Binds a site to this screen.
      * @param site Reference to the site to be bounded to this Screen.
      */
@@ -172,7 +125,7 @@ export interface DisplayOptions {
     fontSize?: number,
     bg?: string,
     forceSquareRatio?: boolean,
-    target?: HTMLElement
+    target: HTMLElement | null
 }
 
 /**
