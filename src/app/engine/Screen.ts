@@ -117,6 +117,8 @@ export class PlayScreen extends Screen {
                     break;
             }
         }
+
+        this.render();
     }
 
     setSite(site: Site) {
