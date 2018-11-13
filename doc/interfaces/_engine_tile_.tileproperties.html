@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;engine/actions/Mixins&quot; | xdaysrl</title>
+	<title>TileProperties | xdaysrl</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,56 +56,92 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_engine_actions_mixins_.html">&quot;engine/actions/Mixins&quot;</a>
+					<a href="../modules/_engine_tile_.html">&quot;engine/Tile&quot;</a>
+				</li>
+				<li>
+					<a href="_engine_tile_.tileproperties.html">TileProperties</a>
 				</li>
 			</ul>
-			<h1>External module &quot;engine/actions/Mixins&quot;</h1>
+			<h1>Interface TileProperties</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="_engine_glyph_.glyphproperties.html" class="tsd-signature-type">GlyphProperties</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">TileProperties</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Functions</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_engine_actions_mixins_.html#applymixins" class="tsd-kind-icon">apply<wbr>Mixins</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_engine_tile_.tileproperties.html#bg" class="tsd-kind-icon">bg</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_engine_tile_.tileproperties.html#char" class="tsd-kind-icon">char</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_engine_tile_.tileproperties.html#fg" class="tsd-kind-icon">fg</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_engine_tile_.tileproperties.html#walkable" class="tsd-kind-icon">walkable</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="applymixins" class="tsd-anchor"></a>
-					<h3>apply<wbr>Mixins</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">apply<wbr>Mixins<span class="tsd-signature-symbol">(</span>derived<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, bases<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/actions/Mixins.ts#L4">engine/actions/Mixins.ts:4</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>derived: <span class="tsd-signature-type">any</span></h5>
-								</li>
-								<li>
-									<h5>bases: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="bg" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> bg</h3>
+					<div class="tsd-signature tsd-kind-icon">bg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_engine_glyph_.glyphproperties.html">GlyphProperties</a>.<a href="_engine_glyph_.glyphproperties.html#bg">bg</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Glyph.ts#L28">engine/Glyph.ts:28</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="char" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> char</h3>
+					<div class="tsd-signature tsd-kind-icon">char<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_engine_glyph_.glyphproperties.html">GlyphProperties</a>.<a href="_engine_glyph_.glyphproperties.html#char">char</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Glyph.ts#L29">engine/Glyph.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="fg" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fg</h3>
+					<div class="tsd-signature tsd-kind-icon">fg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_engine_glyph_.glyphproperties.html">GlyphProperties</a>.<a href="_engine_glyph_.glyphproperties.html#fg">fg</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Glyph.ts#L27">engine/Glyph.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="walkable" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> walkable</h3>
+					<div class="tsd-signature tsd-kind-icon">walkable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Tile.ts#L18">engine/Tile.ts:18</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -116,42 +152,63 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_engine_displaymanager_.html">"engine/<wbr>Display<wbr>Manager"</a>
+						<a href="../modules/_engine_displaymanager_.html">"engine/<wbr>Display<wbr>Manager"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_engine_entity_.html">"engine/<wbr>Entity"</a>
+						<a href="../modules/_engine_entity_.html">"engine/<wbr>Entity"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_engine_glyph_.html">"engine/<wbr>Glyph"</a>
+						<a href="../modules/_engine_glyph_.html">"engine/<wbr>Glyph"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_engine_hero_.html">"engine/<wbr>Hero"</a>
+						<a href="../modules/_engine_hero_.html">"engine/<wbr>Hero"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_engine_screen_.html">"engine/<wbr>Screen"</a>
+						<a href="../modules/_engine_screen_.html">"engine/<wbr>Screen"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_engine_site_.html">"engine/<wbr>Site"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_engine_tile_.html">"engine/<wbr>Tile"</a>
+						<a href="../modules/_engine_site_.html">"engine/<wbr>Site"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="_engine_actions_mixins_.html">"engine/actions/<wbr>Mixins"</a>
+						<a href="../modules/_engine_tile_.html">"engine/<wbr>Tile"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_engine_actions_moveable_.html">"engine/actions/<wbr>Moveable"</a>
+						<a href="../modules/_engine_actions_mixins_.html">"engine/actions/<wbr>Mixins"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_main_.html">"main"</a>
+						<a href="../modules/_engine_actions_moveable_.html">"engine/actions/<wbr>Moveable"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_main_.html">"main"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="_engine_actions_mixins_.html#applymixins" class="tsd-kind-icon">apply<wbr>Mixins</a>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/_engine_tile_.tile.html" class="tsd-kind-icon">Tile</a>
 					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_engine_tile_.tileproperties.html" class="tsd-kind-icon">Tile<wbr>Properties</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_engine_tile_.tileproperties.html#bg" class="tsd-kind-icon">bg</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_engine_tile_.tileproperties.html#char" class="tsd-kind-icon">char</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_engine_tile_.tileproperties.html#fg" class="tsd-kind-icon">fg</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_engine_tile_.tileproperties.html#walkable" class="tsd-kind-icon">walkable</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>

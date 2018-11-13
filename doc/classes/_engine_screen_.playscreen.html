@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Screen | xdaysrl</title>
+	<title>PlayScreen | xdaysrl</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -59,10 +59,10 @@
 					<a href="../modules/_engine_screen_.html">&quot;engine/Screen&quot;</a>
 				</li>
 				<li>
-					<a href="_engine_screen_.screen.html">Screen</a>
+					<a href="_engine_screen_.playscreen.html">PlayScreen</a>
 				</li>
 			</ul>
-			<h1>Class Screen</h1>
+			<h1>Class PlayScreen</h1>
 		</div>
 	</div>
 </header>
@@ -73,10 +73,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Screen</span>
+						<a href="_engine_screen_.screen.html" class="tsd-signature-type">Screen</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="_engine_screen_.playscreen.html" class="tsd-signature-type">PlayScreen</a>
+								<span class="target">PlayScreen</span>
 							</li>
 						</ul>
 					</li>
@@ -89,24 +89,28 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_engine_screen_.screen.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_engine_screen_.playscreen.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_engine_screen_.screen.html#dimensions" class="tsd-kind-icon">dimensions</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_engine_screen_.screen.html#display" class="tsd-kind-icon">display</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_engine_screen_.playscreen.html#current_site" class="tsd-kind-icon">current_<wbr>site</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_engine_screen_.playscreen.html#display" class="tsd-kind-icon">display</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_engine_screen_.playscreen.html#focus" class="tsd-kind-icon">focus</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_engine_screen_.playscreen.html#player" class="tsd-kind-icon">player</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_engine_screen_.screen.html#enter" class="tsd-kind-icon">enter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_engine_screen_.screen.html#exit" class="tsd-kind-icon">exit</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_engine_screen_.screen.html#getdimensions" class="tsd-kind-icon">get<wbr>Dimensions</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_engine_screen_.screen.html#handleinput" class="tsd-kind-icon">handle<wbr>Input</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_engine_screen_.screen.html#render" class="tsd-kind-icon">render</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_engine_screen_.playscreen.html#enter" class="tsd-kind-icon">enter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_engine_screen_.playscreen.html#exit" class="tsd-kind-icon">exit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_engine_screen_.playscreen.html#getdimensions" class="tsd-kind-icon">get<wbr>Dimensions</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_engine_screen_.playscreen.html#getsite" class="tsd-kind-icon">get<wbr>Site</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_engine_screen_.playscreen.html#handleinput" class="tsd-kind-icon">handle<wbr>Input</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_engine_screen_.playscreen.html#render" class="tsd-kind-icon">render</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_engine_screen_.playscreen.html#setsite" class="tsd-kind-icon">set<wbr>Site</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,17 +118,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Screen<span class="tsd-signature-symbol">(</span>properties<span class="tsd-signature-symbol">: </span><a href="../interfaces/_engine_screen_.screenoptions.html" class="tsd-signature-type">ScreenOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_engine_screen_.screen.html" class="tsd-signature-type">Screen</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Play<wbr>Screen<span class="tsd-signature-symbol">(</span>properties<span class="tsd-signature-symbol">: </span><a href="../interfaces/_engine_screen_.screenoptions.html" class="tsd-signature-type">ScreenOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_engine_screen_.playscreen.html" class="tsd-signature-type">PlayScreen</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="_engine_screen_.screen.html">Screen</a>.<a href="_engine_screen_.screen.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L8">engine/Screen.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L31">engine/Screen.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -133,92 +138,105 @@
 									<h5>properties: <a href="../interfaces/_engine_screen_.screenoptions.html" class="tsd-signature-type">ScreenOptions</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_engine_screen_.screen.html" class="tsd-signature-type">Screen</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_engine_screen_.playscreen.html" class="tsd-signature-type">PlayScreen</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="dimensions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> dimensions</h3>
-					<div class="tsd-signature tsd-kind-icon">dimensions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="current_site" class="tsd-anchor"></a>
+					<h3>current_<wbr>site</h3>
+					<div class="tsd-signature tsd-kind-icon">current_<wbr>site<span class="tsd-signature-symbol">:</span> <a href="_engine_site_.site.html" class="tsd-signature-type">Site</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L8">engine/Screen.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L31">engine/Screen.ts:31</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-						</ul>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="display" class="tsd-anchor"></a>
 					<h3>display</h3>
 					<div class="tsd-signature tsd-kind-icon">display<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Display</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="_engine_screen_.screen.html">Screen</a>.<a href="_engine_screen_.screen.html#display">display</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L7">engine/Screen.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L7">engine/Screen.ts:7</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="focus" class="tsd-anchor"></a>
+					<h3>focus</h3>
+					<div class="tsd-signature tsd-kind-icon">focus<span class="tsd-signature-symbol">:</span> <a href="_engine_entity_.entity.html" class="tsd-signature-type">Entity</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L29">engine/Screen.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="player" class="tsd-anchor"></a>
+					<h3>player</h3>
+					<div class="tsd-signature tsd-kind-icon">player<span class="tsd-signature-symbol">:</span> <a href="_engine_hero_.hero.html" class="tsd-signature-type">Hero</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L30">engine/Screen.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="enter" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> enter</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>enter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">enter<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="_engine_screen_.screen.html">Screen</a>.<a href="_engine_screen_.screen.html#enter">enter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L15">engine/Screen.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L42">engine/Screen.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="exit" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> exit</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>exit</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">exit<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="_engine_screen_.screen.html">Screen</a>.<a href="_engine_screen_.screen.html#exit">exit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L17">engine/Screen.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L46">engine/Screen.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getdimensions" class="tsd-anchor"></a>
 					<h3>get<wbr>Dimensions</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Dimensions<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="_engine_screen_.screen.html">Screen</a>.<a href="_engine_screen_.screen.html#getdimensions">getDimensions</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L21">engine/Screen.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L21">engine/Screen.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
@@ -234,16 +252,34 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="handleinput" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> handle<wbr>Input</h3>
+					<a name="getsite" class="tsd-anchor"></a>
+					<h3>get<wbr>Site</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">handle<wbr>Input<span class="tsd-signature-symbol">(</span>eventName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Site<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_engine_site_.site.html" class="tsd-signature-type">Site</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L25">engine/Screen.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L128">engine/Screen.ts:128</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="_engine_site_.site.html" class="tsd-signature-type">Site</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="handleinput" class="tsd-anchor"></a>
+					<h3>handle<wbr>Input</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">handle<wbr>Input<span class="tsd-signature-symbol">(</span>eventName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">KeyboardEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_engine_screen_.screen.html">Screen</a>.<a href="_engine_screen_.screen.html#handleinput">handleInput</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L85">engine/Screen.ts:85</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -252,26 +288,50 @@
 									<h5>eventName: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>event: <span class="tsd-signature-type">Event</span></h5>
+									<h5>event: <span class="tsd-signature-type">KeyboardEvent</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="render" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> render</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>render</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">render<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="_engine_screen_.screen.html">Screen</a>.<a href="_engine_screen_.screen.html#render">render</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/d23bcf8/src/app/engine/Screen.ts#L19">engine/Screen.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L50">engine/Screen.ts:50</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setsite" class="tsd-anchor"></a>
+					<h3>set<wbr>Site</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Site<span class="tsd-signature-symbol">(</span>site<span class="tsd-signature-symbol">: </span><a href="_engine_site_.site.html" class="tsd-signature-type">Site</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/untio11/xdaysRL/blob/879439a/src/app/engine/Screen.ts#L124">engine/Screen.ts:124</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>site: <a href="_engine_site_.site.html" class="tsd-signature-type">Site</a></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -318,42 +378,54 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_engine_screen_.playscreen.html" class="tsd-kind-icon">Play<wbr>Screen</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_engine_screen_.screen.html" class="tsd-kind-icon">Screen</a>
+						<a href="_engine_screen_.playscreen.html" class="tsd-kind-icon">Play<wbr>Screen</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_engine_screen_.screen.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_engine_screen_.screen.html#dimensions" class="tsd-kind-icon">dimensions</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_engine_screen_.playscreen.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_engine_screen_.screen.html#display" class="tsd-kind-icon">display</a>
+								<a href="_engine_screen_.playscreen.html#current_site" class="tsd-kind-icon">current_<wbr>site</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_engine_screen_.playscreen.html#display" class="tsd-kind-icon">display</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_engine_screen_.playscreen.html#focus" class="tsd-kind-icon">focus</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_engine_screen_.playscreen.html#player" class="tsd-kind-icon">player</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_engine_screen_.playscreen.html#enter" class="tsd-kind-icon">enter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_engine_screen_.playscreen.html#exit" class="tsd-kind-icon">exit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_engine_screen_.playscreen.html#getdimensions" class="tsd-kind-icon">get<wbr>Dimensions</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_engine_screen_.screen.html#enter" class="tsd-kind-icon">enter</a>
+								<a href="_engine_screen_.playscreen.html#getsite" class="tsd-kind-icon">get<wbr>Site</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_engine_screen_.playscreen.html#handleinput" class="tsd-kind-icon">handle<wbr>Input</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_engine_screen_.playscreen.html#render" class="tsd-kind-icon">render</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_engine_screen_.screen.html#exit" class="tsd-kind-icon">exit</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_engine_screen_.screen.html#getdimensions" class="tsd-kind-icon">get<wbr>Dimensions</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_engine_screen_.screen.html#handleinput" class="tsd-kind-icon">handle<wbr>Input</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_engine_screen_.screen.html#render" class="tsd-kind-icon">render</a>
+								<a href="_engine_screen_.playscreen.html#setsite" class="tsd-kind-icon">set<wbr>Site</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_engine_screen_.screen.html" class="tsd-kind-icon">Screen</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_engine_screen_.displayoptions.html" class="tsd-kind-icon">Display<wbr>Options</a>
 					</li>
