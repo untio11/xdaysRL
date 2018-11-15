@@ -78,7 +78,7 @@ export class PlayScreen extends Screen {
         topLeft.x = Math.min(topLeft.x, site_width - screen_width);
         topLeft.y = Math.min(topLeft.y, site_height - screen_height);
 
-
+        this.display.clear();
         for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
                 let tile = this.current_site.getTile({x, y});
