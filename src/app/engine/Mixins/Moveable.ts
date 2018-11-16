@@ -6,7 +6,7 @@ import { Entity } from "../Entity";
  * Allows entities to move around the map.
  */
 export class Moveable implements Mixin {
-    readonly id: string = 'Movable';
+    readonly id = "moveable";
     owner: Entity;
 
     constructor(owner: Entity) {

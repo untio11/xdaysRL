@@ -1,11 +1,14 @@
-import { MixinContainer } from "./Mixins";
 import { Moveable } from "./Moveable";
 import { Damagable } from "./Damagable";
+
+import { MixinContainer } from "./Mixins";
 
 /**
  * Contains a list of all the mixins for easy referencing.
  */
-export const Mixins = new MixinContainer({
-    "Moveable": Moveable,
-    "Damagable": Damagable
-});
+let mixins = {
+    "moveable": Moveable,
+    "damagable": Damagable
+};
+
+export const Mixins = new MixinContainer(mixins);

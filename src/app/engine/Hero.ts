@@ -1,5 +1,4 @@
 import { Entity, EntityProperties } from "./Entity";
-
 import { Site, position } from "./Site";
 
 /**
@@ -9,12 +8,16 @@ export class Hero extends Entity {
     constructor(properties: EntityProperties) {
         super(properties);
     }
+
+    act() {
+        
+    }
 }
 
 
 const HeroTemplate: EntityProperties = {
     char: '@',
-    mixins: ["Moveable", "Damagable"],
+    mixins: ["moveable", "damagable"],
     fg: 'white',
     name: 'Player'
 }

@@ -24,10 +24,24 @@ export class MixinContainer {
         for (let key in mixins) {
             this[key] = mixins[key];
         }
+
+        this.collectProperties();
     }
 
     /** Add a new mixin to the list and map it to its name. I guess it just overrides if it exists already. */
     push(mixin: any) {
         this[mixin.id] = mixin;
+    }
+
+    pop(id: string) {
+        if (this.hasOwnProperty(id)) {
+            delete this.id;
+        }
+    }
+
+    collectProperties() {
+        for (let key in this) {
+            console.log(key);
+        }
     }
 }

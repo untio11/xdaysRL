@@ -111,35 +111,35 @@ export class PlayScreen extends Screen {
             switch (event.code) {
                 case 'ArrowUp':
                 case 'Numpad8':
-                    this.player.mixins['Movable'].tryMove({dx: 0, dy: -1}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: 0, dy: -1}, this.current_site);
                     break;
                 case 'ArrowDown':
                 case 'Numpad2':
-                    this.player.mixins['Movable'].tryMove({dx: 0, dy: 1}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: 0, dy: 1}, this.current_site);
                     break;
                 case 'ArrowLeft':
                 case 'Numpad4':
-                    this.player.mixins['Movable'].tryMove({dx: -1, dy: 0}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: -1, dy: 0}, this.current_site);
                     break;
                 case 'ArrowRight':
                 case 'Numpad6':
-                    this.player.mixins['Movable'].tryMove({dx: 1, dy: 0}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: 1, dy: 0}, this.current_site);
                     break;
                 case 'Numpad7':
-                    this.player.mixins['Movable'].tryMove({dx: -1, dy: -1}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: -1, dy: -1}, this.current_site);
                     break;
                 case 'Numpad9':
-                    this.player.mixins['Movable'].tryMove({dx: 1, dy: -1}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: 1, dy: -1}, this.current_site);
                     break;
                 case 'Numpad1':
-                    this.player.mixins['Movable'].tryMove({dx: -1, dy: 1}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: -1, dy: 1}, this.current_site);
                     break;
                 case 'Numpad3':
-                    this.player.mixins['Movable'].tryMove({dx: 1, dy: 1}, this.current_site);
+                    this.player.mixins['moveable'].tryMove({dx: 1, dy: 1}, this.current_site);
                     break;
                 default:
-                    this.player.mixins["Damagable"].takeHit(1);
-                    console.log(this.player.mixins["Damagable"].getHp());
+                    this.player.mixins["damagable"].takeHit(1);
+                    console.log(this.player.mixins["damagable"].getHp());
                     break;
             }
         }
@@ -172,7 +172,7 @@ export interface DisplayOptions {
     fontSize?: number,
     bg?: string,
     forceSquareRatio?: boolean,
-    target?: HTMLElement
+    target: HTMLElement | null
 }
 
 /**

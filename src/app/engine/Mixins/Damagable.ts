@@ -2,7 +2,7 @@ import { Mixin } from "./Mixins";
 import { Entity } from "./../Entity";
 
 export class Damagable implements Mixin {
-    readonly id: string = "Damagable";
+    readonly id = "damagable";
     owner: Entity;
     health: number;
     
