@@ -5,15 +5,15 @@ export class Glyph {
     /** The character to be displayed when this glyph is printed.
      * Default character is ' '.
     */
-    private character: string;
+    protected character: string;
     /** Foreground colour for this glyph.
      * Default colour is white.
     */
-    private foreground: string;
+    protected foreground: string;
     /** Background colour for this glyph.
      * Default colour is black.
      */
-    private background: string;
+    protected background: string;
 
     /**
      * Initialize according to the given optional properties or use the default values.
@@ -32,12 +32,12 @@ export class Glyph {
     }
 
     /**@returns The foreground colour of this glyph. */
-    getForeground() {
+    getForeground(): string {
         return this.foreground;
     }
     
     /**@returns The background colour of this glyph. */
-    getBackground() {
+    getBackground(): string {
         return this.background;
     }
 }

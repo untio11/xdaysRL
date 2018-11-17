@@ -2,6 +2,7 @@ import { Map } from 'rot-js';
 import { range } from "lodash";
 import { Tile } from "./Tile";
 import { Entity } from "./Entity";
+import { poissonDiscSampler } from "./../util/poisson-disc-sampler";
 
 /**
  * For storing a map, together with some helper functions around it.
@@ -18,8 +19,8 @@ export class Site {
      * @param options Simple object to determine the height, width and smootheness of the map.
      */
     constructor(options: {width: number, height: number, smoothness: number}) {
-        this.width = options.width | 7;
-        this.height = options.height | 7;
+        this.width = options.width;
+        this.height = options.height;
         this.entities = [];
 
         this.map = new Map.Cellular(this.width, this.height, {born: [3], topology:8, survive: [0, 1, 2, 3, 4, 5, 6, 7, 8]});
@@ -27,28 +28,51 @@ export class Site {
         this.map_data = range(this.width).map(() => (
             new Array(this.height).map(() => Tile.nullTile)
         ));
+
         
+        let sampler = poissonDiscSampler(this.width - 1, this.height - 1, options.smoothness + 5);
+        let sampler2 = poissonDiscSampler(this.width - 1, this.height - 1, 5);
         
-        for (let i = 0; i < options.smoothness; i++) {
-            for (let i = 0; i < 10; i++) {
-                this.drawPlus(Math.floor(Math.random() * (this.width - 2)) + 1, Math.floor(Math.random() * (this.height - 2)) + 1);
+        for (let i = 0; i <= options.smoothness; i++) {
+            for (let j = 0; j < ((i* i) + (5 * (i))); j++) { // let j = 0; j < (i + 1) * <DENSITY>; j++
+                let point = sampler();
+                if (!point) continue;
+                let x = Math.floor(point[0]);
+                let y = Math.floor(point[1]);
+
+                if (x < 99 && x > 0 && y < 99 && y > 0) {
+                    this.drawSapling(x, y);
+                }      
+            
             }
-            this.map.create();
+
+            if (i == options.smoothness) {
+                for (let k = 0; k < options.height * options.height; k++) {
+                    let point = sampler2();
+                    if (!point) continue;
+                    
+                    let x = Math.floor(point[0]);
+                    let y = Math.floor(point[1]);   
+                    if (x < 99 && x > 0 && y < 99 && y > 0) {
+                        this.map.set(x, y, 1);
+                    }
+                }
+
+                this.map.create((x: number, y: number, wall: number) => (
+                    this.map_data[x][y] = wall ? Tile.wallTile : Tile.floorTile
+                ));
+            } else {
+                this.map.create();
+            }
         }
-        for (let i = 0; i < 10; i++) {
-            this.drawPlus(Math.floor(Math.random() * (this.width - 2)) + 1, Math.floor(Math.random() * (this.height - 2)) + 1);
-        }
-        this.map.create((x: number, y: number, wall: number) => (
-                this.map_data[x][y] = wall ? Tile.wallTile : Tile.floorTile
-        ));
     }
 
     /**
-     * Draw a '+' centered ad (x,y). Mostly for testing right now.
+     * Draw a '+' centered ad (x,y). Mostly for testing right now. Used as the start of a tree.
      * @param x Coordinate
      * @param y Coordinate
      */
-    drawPlus(x: number, y: number) {
+    drawSapling(x: number, y: number) {
         this.map.set(x, y, 1);
         this.map.set(x + 1, y, 1);
         this.map.set(x - 1, y, 1);
