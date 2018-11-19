@@ -1,83 +1,32 @@
 import { Map } from 'rot-js';
 import { range } from "lodash";
-import { Tile } from "./Tile";
+import { Tile, TileProperties, treeTemplate, grassTemplate } from "./Tile";
 import { Entity } from "./Entity";
 import { poissonDiscSampler } from "./../util/poisson-disc-sampler";
 
 /**
  * For storing a map, together with some helper functions around it.
  */
-export class Site {
-    private map: Map.Cellular;
-    private map_data: Tile[][];
+export abstract class Site {
+    protected abstract map: Map;
+    protected map_data: Tile[][];
+    protected entities: Entity[];
     readonly height: number;
     readonly width: number;
-    entities: Entity[];
 
     /**
-     * 
-     * @param options Simple object to determine the height, width and smootheness of the map.
+     * Initialize the map according to some parameters.
+     * @param properties Simple object to determine the height, width and smootheness of the map.
      */
-    constructor(options: {width: number, height: number, smoothness: number}) {
-        this.width = options.width;
-        this.height = options.height;
+    constructor(properties: SiteProperties) {
+        this.width = properties.width;
+        this.height = properties.height;
         this.entities = [];
 
-        this.map = new Map.Cellular(this.width, this.height, {born: [3], topology:8, survive: [0, 1, 2, 3, 4, 5, 6, 7, 8]});
-        
+        // Initialize to epmty 2D-array
         this.map_data = range(this.width).map(() => (
             new Array(this.height).map(() => Tile.nullTile)
         ));
-
-        
-        let sampler = poissonDiscSampler(this.width - 1, this.height - 1, options.smoothness + 5);
-        let sampler2 = poissonDiscSampler(this.width - 1, this.height - 1, 5);
-        
-        for (let i = 0; i <= options.smoothness; i++) {
-            for (let j = 0; j < ((i* i) + (5 * (i))); j++) { // let j = 0; j < (i + 1) * <DENSITY>; j++
-                let point = sampler();
-                if (!point) continue;
-                let x = Math.floor(point[0]);
-                let y = Math.floor(point[1]);
-
-                if (x < 99 && x > 0 && y < 99 && y > 0) {
-                    this.drawSapling(x, y);
-                }      
-            
-            }
-
-            if (i == options.smoothness) {
-                for (let k = 0; k < options.height * options.height; k++) {
-                    let point = sampler2();
-                    if (!point) continue;
-                    
-                    let x = Math.floor(point[0]);
-                    let y = Math.floor(point[1]);   
-                    if (x < 99 && x > 0 && y < 99 && y > 0) {
-                        this.map.set(x, y, 1);
-                    }
-                }
-
-                this.map.create((x: number, y: number, wall: number) => (
-                    this.map_data[x][y] = wall ? Tile.wallTile : Tile.floorTile
-                ));
-            } else {
-                this.map.create();
-            }
-        }
-    }
-
-    /**
-     * Draw a '+' centered ad (x,y). Mostly for testing right now. Used as the start of a tree.
-     * @param x Coordinate
-     * @param y Coordinate
-     */
-    drawSapling(x: number, y: number) {
-        this.map.set(x, y, 1);
-        this.map.set(x + 1, y, 1);
-        this.map.set(x - 1, y, 1);
-        this.map.set(x, y + 1, 1);
-        this.map.set(x, y - 1, 1);
     }
 
     /** @returns An array of tiles. */
@@ -104,7 +53,7 @@ export class Site {
             Math.floor(Math.random() * this.height)
         );
 
-        while (this.getTile(pos) != Tile.floorTile) {
+        while (!this.getTile(pos).walkable) {
             pos.x = Math.floor(Math.random() * this.width);
             pos.y = Math.floor(Math.random() * this.height);
         }
@@ -117,6 +66,71 @@ export class Site {
      */
     getDimensions() {
         return {width: this.width, height: this.height};
+    }
+}
+
+export class Forest extends Site {
+    map: Map.Cellular;
+
+    constructor(properties: ForestProperties) {
+        super(properties);
+
+        this.map = new Map.Cellular(properties.width, properties.height, { born: [3], topology: 8, survive: [0, 1, 2, 3, 4, 5, 6, 7, 8] });
+
+        let sampler = poissonDiscSampler(this.width - 1, this.height - 1, properties.age + 7);
+        let sampler2 = poissonDiscSampler(this.width - 1, this.height - 1, 5);
+
+        for (let i = 0; i <= properties.age; i++) {
+            for (let j = 0; j < ((i * i) + (5 * (i))); j++) { // let j = 0; j < (i + 1) * <DENSITY>; j++
+                let { x, y } = this.convertPoint(sampler()); 
+
+                if (this.isValidPoint(x, y)) {
+                    this.drawSapling(x, y);
+                } else {
+                    continue;
+                }
+            }
+
+            if (i == properties.age) {
+                for (let k = 0; k < properties.height * properties.height; k++) {
+                    let {x, y} = this.convertPoint(sampler2()); 
+
+                    if (this.isValidPoint(x, y)) {
+                        this.map.set(x, y, 1);
+                    } else {
+                        continue;
+                    }
+                }
+
+                this.map.create((x: number, y: number, wall: number) => (
+                    this.map_data[x][y] = (wall ? new Tile(treeTemplate) : new Tile(grassTemplate))
+                ));
+            } else {
+                this.map.create();
+            }
+        }
+    }
+
+    private isValidPoint(x: number, y: number) {
+        return (x < this.width - 1 && x > 0 && y < this.height - 1 && y > 0);
+    }
+
+    private convertPoint(sample: [number, number] | undefined) {
+        if (!sample) return {x: -1, y: -1}; // Will count as invalid
+        return {x: Math.floor(sample[0]), y: Math.floor(sample[1])};
+    }
+
+    /**
+     * Draw a '+' centered ad (x,y). Mostly for testing right now. Used as the start of a tree.
+     * @param x Coordinate
+     * @param y Coordinate
+     */
+    drawSapling(x: number, y: number) {
+        this.map.set(x, y, 1);
+        this.map.set(x + 1, y, 1);
+        this.map.set(x - 1, y, 1);
+        this.map.set(x, y + 1, 1);
+        this.map.set(x, y - 1, 1);
     }
 }
 
@@ -146,4 +160,13 @@ export class position {
             this.site
         );
     }
+}
+
+export interface SiteProperties {
+    width: number;
+    height: number;
+}
+
+export interface ForestProperties extends SiteProperties {
+    age: number;
 }

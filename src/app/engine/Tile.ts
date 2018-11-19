@@ -1,5 +1,5 @@
 import { Glyph, GlyphProperties } from './Glyph'
-import { Color } from "rot-js";
+import { Color, colors } from "./Graphical/colors";
 
 /**
  * Describes the thing the world is made out of.
@@ -7,15 +7,16 @@ import { Color } from "rot-js";
 export class Tile extends Glyph {
     /** Empty tile for easy checking  */
     static nullTile: Tile = new Tile(); // Basic empty tile
-    /** Static walltile to save memory */
-    static wallTile: Tile = new Tile({ char: '#', fg: 'goldenrod', bg: 'goldenrod', randomized_fg: true, walkable: false });
-    /** Static floortile to save memory */
-    static floorTile: Tile = new Tile({char: '.', fg:'green', bg:'green', walkable: true, randomized_bg: true});
     
     /** Determines if this tile is walkable, default is false */
     walkable: boolean;
+    /** Whether the foreground should randomly change color */
     randomized_fg: boolean;
+    /** The frequency at which the changing of color happens. Percentage in range [0, 1). -1 makes sure color is randomly set once at creation. */
+    frequency: number;
+    /** Whether the background should randomly change color */
     randomized_bg: boolean;
+
     
     /**
      * Initialize a new tile.
@@ -27,22 +28,29 @@ export class Tile extends Glyph {
         this.walkable = properties.walkable || false;
         this.randomized_fg = properties.randomized_fg || false;
         this.randomized_bg = properties.randomized_bg || false;
+        this.frequency = properties.frequency || -1;
+        if (this.randomized_bg) this.setBackground(this.randomizeColor(this.background)); // To get initial (possibly) random color.
+        if (this.randomized_fg) this.setForeground(this.randomizeColor(this.foreground)); // To get initial (possibly) random color.
+    }
+
+    private shouldUpdate(type: boolean, frequency: number) {
+        return type && frequency != -1 && frequency > Math.random();
+    }
+
+    private randomizeColor(color: [number, number, number]) {
+        return Color.randomize(color, [10, 10, 10]);
     }
 
     getBackground() {
-        if (this.randomized_bg) {
-            return Color.toRGB(Color.randomize(Color.fromString(this.background), [2, 10, 2]));
-        } else {
-            return this.background;
-        }
+        return Color.toRGB(this.shouldUpdate(this.randomized_bg, this.frequency) ?
+            this.randomizeColor(this.background) :
+            this.background);
     }
 
     getForeground() {
-        if (this.randomized_fg) {
-            return Color.toRGB(Color.randomize(Color.fromString(this.foreground), [10, 10, 10]));
-        } else {
-            return this.foreground;
-        }
+        return Color.toRGB(this.shouldUpdate(this.randomized_fg, this.frequency) ?
+            this.randomizeColor(this.foreground) :
+            this.foreground);
     }
 }
 
@@ -53,12 +61,22 @@ export interface TileProperties extends GlyphProperties {
     walkable?: boolean;
     randomized_fg?: boolean;
     randomized_bg?: boolean;
+    frequency?: number;
 }
 
-export const grassTemplate = {
-    char: '.',
-    fg: 'green',
-    bg: 'darkolivegreen',
-    walkable: true,
-    randomized_bg: true
+export const grassTemplate: TileProperties = {
+    char: [',', '.'],
+    fg: colors.grass_green,
+    randomized_fg: true,
+    frequency: 0.2,
+    bg: Color.hsl2rgb(Color.add(Color.rgb2hsl(colors.grass_green), [0,0,-0.18])),
+    walkable: true
+};
+
+export const treeTemplate: TileProperties = {
+    char: '#',
+    fg: colors.wood_light,
+    randomized_fg: true,
+    bg: Color.hsl2rgb(Color.add(Color.rgb2hsl(colors.wood_light), [0, 0, -0.185])),
+    walkable: false
 };

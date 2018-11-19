@@ -1,5 +1,5 @@
 import { Entity, EntityProperties } from "./Entity";
-import { Site, position } from "./Site";
+import { colors, Color } from "./Graphical/colors";
 
 /**
  * Class defining the player character. It's a subclass of entity.
@@ -18,7 +18,7 @@ export class Hero extends Entity {
 const HeroTemplate: EntityProperties = {
     char: '@',
     mixins: ["moveable", "damagable"],
-    fg: 'white',
+    fg: Color.fromString('white'),
     name: 'Player'
 }
 

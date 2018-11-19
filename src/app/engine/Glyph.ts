@@ -1,3 +1,5 @@
+import { RNG, Color } from "rot-js";
+
 /**
  * Base class for graphical reprisentation of anything (mostly entities).
  */
@@ -9,11 +11,11 @@ export class Glyph {
     /** Foreground colour for this glyph.
      * Default colour is white.
     */
-    protected foreground: string;
+    protected foreground: [number, number, number];
     /** Background colour for this glyph.
      * Default colour is black.
      */
-    protected background: string;
+    protected background: [number, number, number];
 
     /**
      * Initialize according to the given optional properties or use the default values.
@@ -21,9 +23,11 @@ export class Glyph {
      */
     constructor(properties?: GlyphProperties) {
         properties = properties || {};
-        this.character = properties.char || ' ';
-        this.foreground = properties.fg || 'white';
-        this.background = properties.bg || 'black';
+        if (!properties.char) this.character = ' ';
+        else this.character = (Array.isArray(properties.char)) ? properties.char[RNG.getUniformInt(0, properties.char.length - 1)] : properties.char;
+
+        this.foreground = properties.fg || [255, 255, 255];
+        this.background = properties.bg || [0, 0, 0];
     }
 
     /**@returns The character of this glyph. */
@@ -33,12 +37,28 @@ export class Glyph {
 
     /**@returns The foreground colour of this glyph. */
     getForeground(): string {
-        return this.foreground;
+        return Color.toRGB(this.foreground);
     }
     
     /**@returns The background colour of this glyph. */
     getBackground(): string {
-        return this.background;
+        return Color.toRGB(this.background);
+    }
+
+    /** Update the foregound color of this glyph */
+    protected setForeground(new_color: [number, number, number]): void {
+        this.foreground = new_color;
+    }
+
+    /** Update the background color of this glyph */
+    protected setBackground(new_color: [number, number, number]): void {
+        this.background = new_color;
+    }
+
+    protected setCharacter(new_character: string) {
+        if (new_character.length == 1) {
+            this.character = new_character;
+        }
     }
 }
 
@@ -46,7 +66,7 @@ export class Glyph {
  * Three properties that define the glyph.
  */
 export interface GlyphProperties {
-    fg?: string,
-    bg?: string,
-    char?: string
+    fg?: [number, number, number],
+    bg?: [number, number, number],
+    char?: string | string[]
 }

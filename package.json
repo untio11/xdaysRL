@@ -25,6 +25,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.118",
     "@types/rot-js": "^0.6.4",
+    "circular-dependency-plugin": "^5.0.2",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
     "rot-js": "^2.0.0",
