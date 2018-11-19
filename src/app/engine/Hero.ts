@@ -13,13 +13,3 @@ export class Hero extends Entity {
         
     }
 }
-
-
-const HeroTemplate: EntityProperties = {
-    char: '@',
-    mixins: ["moveable", "damagable"],
-    fg: Color.fromString('white'),
-    name: 'Player'
-}
-
-export { HeroTemplate };

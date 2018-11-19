@@ -1,7 +1,8 @@
 import { Display } from 'rot-js';
 import { Site, position } from "./Site";
-import { Hero, HeroTemplate } from "./Hero";
+import { Hero } from "./Hero";
 import { Entity } from "./Entity";
+import { HeroTemplate } from "./Graphical/entityTemplates";
 
 /**
  * Wrapper around rot.Display for some extra functionality.
