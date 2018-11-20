@@ -1,7 +1,7 @@
-import { Glyph, GlyphProperties } from "./Glyph";
-import { Mixins } from "./Mixins/Index";
-import { MixinContainer } from "./Mixins/MixinContainer";
-import { Site, position } from "./Site";
+import { Glyph, GlyphProperties } from "../Glyph";
+import { Mixins } from "../Mixins/Index";
+import { MixinContainer } from "../Mixins/MixinContainer";
+import { Site, position } from "../Site";
 
 /**
  * Base class for all entities. Extends glyph because all entities are to be represented by a glyph.
@@ -12,7 +12,7 @@ export abstract class Entity extends Glyph {
     /** And all entities should have a position*/
     protected position: position;
     /**An object to hold the mixins of this entity*/
-    mixins: MixinContainer;
+    protected mixins: MixinContainer;
 
     /**
      * Set the name position and glyph properties for this entity.
@@ -30,8 +30,12 @@ export abstract class Entity extends Glyph {
         this.mixins = new MixinContainer();
         // Instantiate and link the mixins based on the given list of mixins.
         for (let mixin_name of properties.mixins) {
-            if (mixin_name in Mixins) {
-                this.addMixin(mixin_name);
+            if (Mixins.hasOwnProperty(mixin_name)) {
+                if (properties.mixin_options && properties.mixin_options.hasOwnProperty(mixin_name)) {
+                    this.addMixin(mixin_name, properties.mixin_options[mixin_name]);
+                } else {
+                    this.addMixin(mixin_name);
+                }
             }
         }
     }
@@ -51,20 +55,32 @@ export abstract class Entity extends Glyph {
         return this.position;
     }
 
-    addMixin(name: string) {
-        if (name in Mixins) {
-            this.mixins.push(new Mixins[name](this));
+    addMixin(name: string, properties?: {}) {
+        if (Mixins.hasOwnProperty(name)) {
+            this.mixins.push(new Mixins[name](this, properties));
             return true;
         }
         return false;
     }
 
     removeMixin(name: string) {
-        if (name in this.mixins) {
+        if (this.hasMixin(name)) {
             this.mixins.pop(new Mixins[name](this));
             return true;
         }
         return false;
+    }
+
+    hasMixin(name: string) {
+        return this.mixins.hasOwnProperty(name);
+    }
+
+    MixinProps(name: string) {
+        if (this.hasMixin(name)) {
+            return this.mixins[name];
+        } else {
+            return undefined;
+        }
     }
 
     abstract act(...args: any): void;
@@ -78,4 +94,5 @@ export interface EntityProperties extends GlyphProperties {
     x?: number;
     y?: number;
     mixins: string[];
+    mixin_options?: {[name: string]: {}}
 }

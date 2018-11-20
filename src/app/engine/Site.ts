@@ -1,7 +1,7 @@
 import { Map } from 'rot-js';
 import { range } from "lodash";
 import { Tile } from "./Tile";
-import { Entity } from "./Entity";
+import { Entity } from "./Entities/Entity";
 import { poissonDiscSampler } from "./../util/poisson-disc-sampler";
 import { grassTemplate, treeTemplate } from "./Graphical/tileTemplates";
 

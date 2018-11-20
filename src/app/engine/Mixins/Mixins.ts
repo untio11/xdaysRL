@@ -1,4 +1,4 @@
-import { Entity } from "./../Entity";
+import { Entity } from "../Entities/Entity";
 
 /**
  * Basic interface for every mixin.

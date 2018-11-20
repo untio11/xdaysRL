@@ -1,4 +1,4 @@
-import { Entity, EntityProperties } from "./Entity";
+import { Entity, EntityProperties } from "./Entities/Entity";
 import { colors, Color } from "./Graphical/colors";
 
 /**

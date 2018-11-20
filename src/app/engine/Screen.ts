@@ -1,8 +1,8 @@
 import { Display } from 'rot-js';
 import { Site, position } from "./Site";
 import { Hero } from "./Hero";
-import { Entity } from "./Entity";
-import { HeroTemplate } from "./Graphical/entityTemplates";
+import { Entity } from "./Entities/Entity";
+import { HeroTemplate } from "./Entities/entityTemplates";
 import { MixinNames } from "./Mixins/MixinNames";
 
 /**
@@ -113,35 +113,35 @@ export class PlayScreen extends Screen {
             switch (event.code) {
                 case 'ArrowUp':
                 case 'Numpad8':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: 0, dy: -1}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 0, dy: -1}, this.current_site);
                     break;
                 case 'ArrowDown':
                 case 'Numpad2':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: 0, dy: 1}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 0, dy: 1}, this.current_site);
                     break;
                 case 'ArrowLeft':
                 case 'Numpad4':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: -1, dy: 0}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: 0}, this.current_site);
                     break;
                 case 'ArrowRight':
                 case 'Numpad6':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: 1, dy: 0}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 0}, this.current_site);
                     break;
                 case 'Numpad7':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: -1, dy: -1}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: -1}, this.current_site);
                     break;
                 case 'Numpad9':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: 1, dy: -1}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: -1}, this.current_site);
                     break;
                 case 'Numpad1':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: -1, dy: 1}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: 1}, this.current_site);
                     break;
                 case 'Numpad3':
-                    this.player.mixins[MixinNames.movable].tryMove({dx: 1, dy: 1}, this.current_site);
+                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 1}, this.current_site);
                     break;
                 default:
-                    this.player.mixins[MixinNames.damagable].takeHit(1);
-                    console.log(this.player.mixins[MixinNames.damagable].getHp());
+                    this.player.MixinProps(MixinNames.damagable).decrementHp(1);
+                    console.log(this.player.MixinProps(MixinNames.damagable).getHp());
                     break;
             }
         }
