@@ -1,6 +1,6 @@
 import { Glyph, GlyphProperties } from "./Glyph";
 import { Mixins } from "./Mixins/Index";
-import { MixinContainer } from "./Mixins/Mixins";
+import { MixinContainer } from "./Mixins/MixinContainer";
 import { Site, position } from "./Site";
 
 /**

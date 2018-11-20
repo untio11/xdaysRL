@@ -1,8 +1,10 @@
 import { Mixin } from "./Mixins";
 import { Entity } from "./../Entity";
 
+export const ID: string = 'Damagable';
+
 export class Damagable implements Mixin {
-    readonly id = "damagable";
+    id = ID;
     owner: Entity;
     health: number;
     

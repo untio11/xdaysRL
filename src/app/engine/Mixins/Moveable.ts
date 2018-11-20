@@ -2,11 +2,13 @@ import { Mixin } from "./Mixins";
 import { Site, position } from '../Site';
 import { Entity } from "../Entity";
 
+export const ID: string = 'Moveable';
+
 /**
  * Allows entities to move around the map.
  */
 export class Moveable implements Mixin {
-    readonly id = "moveable";
+    readonly id = ID;
     owner: Entity;
 
     constructor(owner: Entity) {
