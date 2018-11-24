@@ -1,7 +1,6 @@
 import { Mixin } from "./Mixins";
 import { Entity } from "../Entities/Entity";
 import { FOV } from "rot-js";
-import { Site, position } from "../Site";
 import { Tile } from "../Tile";
 
 export const ID: string = 'Vision';
@@ -15,6 +14,8 @@ export class Vision implements Mixin {
     vision_radius: number;
     /** Might be useful later for implementing magically augmented vision. */
     x_ray: boolean;
+    /** To simply make the check if a tile let's light through */
+    lightPasses: (x: number, y: number) => boolean; 
     
     constructor(owner: Entity, properties?: {vision_radius?: number}) {
         properties = properties || {};
@@ -22,21 +23,20 @@ export class Vision implements Mixin {
         this.owner = owner;
         this.vision_radius = properties.vision_radius || 10;
         this.x_ray = false;
+        this.lightPasses = (x: number, y: number) => (
+            this.owner.getPos().site.getTile({x, y}).light_passes || this.x_ray
+        );
         this.fov = new FOV.PreciseShadowcasting(this.lightPasses);
     }
 
-    lightPasses(x: number, y: number): boolean {
-        let tile = this.owner.getPos().site.getTile({x, y});
-        return tile.light_passes || this.x_ray;
-    }
 
-    getVisibileArea(): Tile[][] {
-        let visible_area = new Array<Tile[]>(this.vision_radius);
+    getVisibileArea(explored: Tile[][]) {
         let position = this.owner.getPos();
+        let site = position.site;
         this.fov.compute(position.x, position.y, this.vision_radius, function(x: number, y: number, r: number, visibility: number) {
-            visible_area[x][y] = position.site.getTile(position).light_passes ? position.site.getTile(position) : Tile.nullTile;
+            if (site.getTile({x, y}).light_passes) {
+                site.setExploredTile(position);
+            }        
         });
-        
-        return visible_area;
     }
 }

@@ -19,6 +19,8 @@ export class Tile extends Glyph {
     randomized_bg: boolean;
     /** Wether ligth passes throught this tile. Used for the fov and visibility copmutations. Default is set to true*/
     light_passes: boolean;
+    /** Wether this tile has been seen yet. */
+    explored: boolean;
 
     
     /**
@@ -35,6 +37,7 @@ export class Tile extends Glyph {
         if (this.randomized_bg) this.setBackground(this.randomizeColor(this.background)); // To get initial (possibly) random color.
         if (this.randomized_fg) this.setForeground(this.randomizeColor(this.foreground)); // To get initial (possibly) random color.
         this.light_passes = properties.light_passes || true; 
+        this.explored = false;
     }
 
     private shouldUpdate(type: boolean, frequency: number) {

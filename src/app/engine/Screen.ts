@@ -46,8 +46,8 @@ export class PlayScreen extends Screen {
      */
     constructor(properties: ScreenOptions) {
         super(properties);
-        this.player = new Hero(HeroTemplate);
         this.current_site = properties.site;
+        this.player = new Hero(HeroTemplate, this.current_site);
         let spawn = this.current_site.getRandomFloorPosition();
         this.player.setPos(spawn);
         this.focus = this.player;
@@ -73,7 +73,8 @@ export class PlayScreen extends Screen {
         // So the top left corner is at most (0,0).
         let topLeft = new position (
             Math.max(0, focus_x - (screen_width / 2)),
-            Math.max(0, focus_y - (screen_height / 2))
+            Math.max(0, focus_y - (screen_height / 2)),
+            this.focus.getPos().site
         );
 
         // Similar for the lower right corner.
@@ -84,13 +85,14 @@ export class PlayScreen extends Screen {
         for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
                 let tile = this.current_site.getTile({x, y});
-                this.display.draw(
+                if (tile.explored) {
+                    this.display.draw(
                     x - topLeft.x,
                     y - topLeft.y,
                     tile.getCharacter(),
                     tile.getForeground(),
-                    tile.getBackground()
-                );
+                    tile.getBackground());
+                }
             }
         }
 
@@ -138,6 +140,9 @@ export class PlayScreen extends Screen {
                     break;
                 case 'Numpad3':
                     this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 1}, this.current_site);
+                    break;
+                case 'KeyV':
+                    this.player.MixinProps(MixinNames.vision).getVisibileArea();
                     break;
                 default:
                     this.player.MixinProps(MixinNames.damagable).decrementHp(1);

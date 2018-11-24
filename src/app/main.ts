@@ -5,7 +5,7 @@ import { Scheduler } from "rot-js";
 export var scheduler = new Scheduler.Speed();
 
 let display_manager = new DisplayManager()
-let screen = document.getElementById("app"); // Otherwise it would be null, which doesn't work with <target?>
+let screen = document.getElementById("app");
 let testSite = new Forest({width: 100, height:100, age: 4});
 let screenSettings = { width: 72, height: 32, site: testSite, forceSquareRatio: true, fontSize: 24, target: screen, type: 'PlayScreen' };
 if (screenSettings.target) {

@@ -18,7 +18,7 @@ export abstract class Entity extends Glyph {
      * Set the name position and glyph properties for this entity.
      * @param properties Contains a bunch of optional properties and a list of mixins which define what kind of functionality this entity has.
      */
-    constructor(properties: EntityProperties, site?: Site) {
+    constructor(properties: EntityProperties, site: Site) {
         super(properties);
         this.name = properties.name || "Placeholder";
         this.position = new position (

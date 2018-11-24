@@ -26,7 +26,7 @@ export abstract class Site {
 
         // Initialize to epmty 2D-array
         this.map_data = range(this.width).map(() => (
-            new Array(this.height).map(() => Tile.nullTile)
+            new Array(this.height).map(() => (new Tile()))
         ));
     }
 
@@ -47,11 +47,18 @@ export abstract class Site {
         }
     }
 
+    setExploredTile(pos: position | {x: number, y: number}) {
+        let {x, y} = pos;
+        // Maybe check if it's actually a tile of the map.p
+        this.getTile({x, y}).explored = true;
+    }
+
     /** @returns A random tile containing a floor. */
     getRandomFloorPosition() {
         let pos: position = new position (
             Math.floor(Math.random() * this.width), 
-            Math.floor(Math.random() * this.height)
+            Math.floor(Math.random() * this.height),
+            this
         );
 
         while (!this.getTile(pos).walkable) {
