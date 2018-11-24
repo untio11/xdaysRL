@@ -9,6 +9,7 @@ export interface TileProperties extends GlyphProperties {
     randomized_fg?: boolean;
     randomized_bg?: boolean;
     frequency?: number;
+    light_passes?: boolean;
 }
 
 export const grassTemplate: TileProperties = {
@@ -20,10 +21,15 @@ export const grassTemplate: TileProperties = {
     walkable: true
 };
 
+export const wallTemplate: TileProperties = {
+
+};
+
 export const treeTemplate: TileProperties = {
     char: '#',
     fg: colors.wood_light,
     randomized_fg: true,
     bg: Color.hsl2rgb(Color.add(Color.rgb2hsl(colors.wood_light), [0, 0, -0.185])),
-    walkable: false
+    walkable: false,
+    
 };

@@ -11,12 +11,14 @@ export class Tile extends Glyph {
     
     /** Determines if this tile is walkable, default is false */
     walkable: boolean;
-    /** Whether the foreground should randomly change color */
+    /** Whether the foreground should randomly change color. Defaults to false. */
     randomized_fg: boolean;
-    /** The frequency at which the changing of color happens. Percentage in range [0, 1). -1 makes sure color is randomly set once at creation. */
+    /** The frequency at which the changing of color happens. Percentage in range [0, 1). -1 makes sure color is randomly set once at creation. Defaults to -1 */
     frequency: number;
-    /** Whether the background should randomly change color */
+    /** Whether the background should randomly change color. Defaults to false */
     randomized_bg: boolean;
+    /** Wether ligth passes throught this tile. Used for the fov and visibility copmutations. Default is set to true*/
+    light_passes: boolean;
 
     
     /**
@@ -32,6 +34,7 @@ export class Tile extends Glyph {
         this.frequency = properties.frequency || -1;
         if (this.randomized_bg) this.setBackground(this.randomizeColor(this.background)); // To get initial (possibly) random color.
         if (this.randomized_fg) this.setForeground(this.randomizeColor(this.foreground)); // To get initial (possibly) random color.
+        this.light_passes = properties.light_passes || true; 
     }
 
     private shouldUpdate(type: boolean, frequency: number) {

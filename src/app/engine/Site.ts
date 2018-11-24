@@ -141,9 +141,9 @@ export class Forest extends Site {
 export class position {
     x: number;
     y: number;
-    site: Site | undefined;
+    site: Site;
 
-    constructor(x: number, y: number, site?: Site) {
+    constructor(x: number, y: number, site: Site) {
         this.x = x;
         this.y = y;
         this.site = site;
