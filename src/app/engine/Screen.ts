@@ -88,15 +88,15 @@ export class PlayScreen extends Screen {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
                 const tile = this.current_site.getTile({x, y});
                 const in_vision = this.containsPoint(visibile_area, [x, y]);
-                const foreground = in_vision ? tile.getForeground() : this.dimColor(tile.getForeground());
-                const background = in_vision ? tile.getBackground() : this.dimColor(tile.getBackground());
+                const foreground = in_vision ? tile.getForeground() : this.dimColor(tile.getForeground(false));
+                const background = in_vision ? tile.getBackground() : this.dimColor(tile.getBackground(false));
                 if (tile.explored) {
                     this.display.draw(
                     x - topLeft.x,
                     y - topLeft.y,
                     tile.getCharacter(),
                     foreground,
-                    tile.getBackground());
+                    background)
                 }
             }
         }
@@ -112,7 +112,7 @@ export class PlayScreen extends Screen {
 
     private dimColor(color: string) {
         const color_code = Color.rgb2hsl(Color.fromString(color));
-        return Color.toRGB(Color.add(color_code, [0, -0.5 * color_code[1], 0]));
+        return Color.toRGB(Color.hsl2rgb(Color.add(color_code, [0, -0.75 * color_code[1], 0])));
     }
 
     private containsPoint(collection: Array<[number, number]>, target: [number, number]) {

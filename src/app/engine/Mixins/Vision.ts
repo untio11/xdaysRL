@@ -1,7 +1,6 @@
 import { Mixin } from "./Mixins";
 import { Entity } from "../Entities/Entity";
 import { FOV } from "rot-js";
-import { Tile } from "../Tile";
 
 export const ID: string = 'Vision';
 
