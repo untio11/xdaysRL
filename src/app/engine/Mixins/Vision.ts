@@ -29,12 +29,16 @@ export class Vision implements Mixin {
         this.fov = new FOV.RecursiveShadowcasting(this.lightPasses);
     }
 
-
-    getVisibileArea(explored: Tile[][]) {
+    /**
+     * Compute the area that's visibile from the owners position.
+     * @returns An array filled with coordinates of visibile tiles.
+     */
+    getVisibileArea(): Array<[number, number]> {
         let position = this.owner.getPos();
-        let site = position.site;
+        let result = new Array<[number, number]>();
         this.fov.compute(position.x, position.y, this.vision_radius, function(x: number, y: number, r: number, visibility: number) {
-            site.setExploredTile({x, y});   
+            result.push([x, y]);
         });
+        return result;
     }
 }

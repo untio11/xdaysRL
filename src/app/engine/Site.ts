@@ -47,6 +47,12 @@ export abstract class Site {
         }
     }
 
+    explore(coordinates: Array<[number, number]>) {
+        for (const point of coordinates) {
+            this.setExploredTile({x: point[0], y: point[1]});
+        }
+    }
+
     setExploredTile(pos: position | {x: number, y: number}) {
         let {x, y} = pos;
         // Maybe check if it's actually a tile of the map.p

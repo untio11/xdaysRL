@@ -65,7 +65,7 @@ export class PlayScreen extends Screen {
      * Actually draw the content of the site on the screen.
      */
     render() {
-        this.focus.MixinProps(MixinNames.vision).getVisibileArea();
+        this.current_site.explore(this.focus.MixinProps(MixinNames.vision).getVisibileArea());
         let { width: site_width, height: site_height } = this.current_site.getDimensions();
         let { x: focus_x, y: focus_y } = this.focus.getPos();
         let { width: screen_width, height: screen_height } = this.getDimensions(); 

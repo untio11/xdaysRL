@@ -8,7 +8,7 @@ export const HeroTemplate: EntityProperties = {
     mixin_options: {
         [MixinNames.moveable]: {speed: 34},
         [MixinNames.damagable]: {starting_hp: 69},
-        [MixinNames.vision]: {vision_radius: 15}
+        [MixinNames.vision]: {vision_radius: 7}
     },
     fg: [255, 255, 255],
     name: 'Player'
