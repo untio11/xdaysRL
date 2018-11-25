@@ -1,5 +1,5 @@
 import { Mixin } from "./Mixins";
-import { Site, position } from '../Site';
+import { Site, position } from '../World/Site';
 import { Entity } from "../Entities/Entity";
 
 export const ID: string = 'Moveable';

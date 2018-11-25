@@ -1,6 +1,6 @@
-import { Entity, EntityProperties } from "./Entities/Entity";
-import { colors, Color } from "./Graphical/colors";
-import { Site } from "./Site";
+import { Entity, EntityProperties } from "./Entity";
+import { colors, Color } from "../Graphical/colors";
+import { Site } from "../World/Site";
 
 /**
  * Class defining the player character. It's a subclass of entity.

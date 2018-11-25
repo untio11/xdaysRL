@@ -1,9 +1,9 @@
 import { Display, Color } from 'rot-js';
-import { Site, position } from "./Site";
-import { Hero } from "./Hero";
-import { Entity } from "./Entities/Entity";
-import { HeroTemplate } from "./Entities/entityTemplates";
-import { MixinNames } from "./Mixins/MixinNames";
+import { Site, position } from "../World/Site";
+import { Hero } from "../Entities/Hero";
+import { Entity } from "../Entities/Entity";
+import { HeroTemplate } from "../Entities/entityTemplates";
+import { MixinNames } from "../Mixins/MixinNames";
 
 /**
  * Wrapper around rot.Display for some extra functionality.
@@ -37,7 +37,6 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
  */
 export class PlayScreen extends Screen {
     focus: Entity;
-    player: Hero;
     current_site: Site;
 
     /**
@@ -47,10 +46,9 @@ export class PlayScreen extends Screen {
     constructor(properties: ScreenOptions) {
         super(properties);
         this.current_site = properties.site;
-        this.player = new Hero(HeroTemplate, this.current_site);
         let spawn = this.current_site.getRandomFloorPosition();
-        this.player.setPos(spawn);
         this.focus = this.player;
+        this.focus.setPos(spawn);
     }
 
     enter() {

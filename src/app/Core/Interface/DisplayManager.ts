@@ -1,24 +1,29 @@
 import { Color, DisplayOptions } from "rot-js";
-import { Site, position } from "./Site";
+import { Site, position } from "../World/Site";
 import { ScreenOptions, PlayScreen, Screen } from './Screen';
 
 /**
  * A manager for handiling Screens. It should keep track of multiple screens and binding of sites and event listeners goes through this class.
  */
 export class DisplayManager {
-    /**
-     * For now we only have one screen, which is the playscreen, but later we might want to add more screens.
-     */
-    playScreen: PlayScreen | undefined; 
+    /** For now we only have one screen, which is the playscreen, but later we might want to add more screens. */
+    playscreen: PlayScreen; 
     /** Pointer to the current screen. */
-    current: Screen | undefined;
+    current_screen: Screen;
+    /** Points to the current site. Defaults to -1, which means no current site. */
+    current_site: number;
+    /** For storing the sites. */
+    sites: Site[];
     /** For counting the amount of screens. */
     count: number;
     
-    constructor() {
-        this.playScreen = undefined;
-        this.current = undefined;
+    constructor(playscreen: PlayScreen) {
+        this.playscreen = playscreen;
+        this.current_screen = this.playscreen;
+        this.sites = [];
+        this.current_site = -1;
         this.count = 0;
+        this.bindSiteToScreen(playscreen.getSite());
     }
 
     /**
@@ -29,17 +34,17 @@ export class DisplayManager {
     add(properties: ScreenOptions) {
         switch (properties.type) {
             case 'PlayScreen':
-                this.playScreen = new PlayScreen(properties);
-                this.current = this.playScreen;
+                this.playscreen = new PlayScreen(properties);
+                this.current_screen = this.playscreen;
                 this.count++;
                 break;
             default:
                 break;
         }
 
-        if (properties.target && this.current) properties.target.appendChild(this.current.display.getContainer());
+        if (properties.target && this.current_screen) properties.target.appendChild(this.current_screen.display.getContainer());
 
-        return this.current;
+        return this.current_screen;
     }
 
     /**
@@ -47,16 +52,16 @@ export class DisplayManager {
      * @param screen Pointer to the screen you want to switch to.
      */
     switchTo(screen: Screen) {
-        if (this.current) this.current.exit();
+        if (this.current_screen) this.current_screen.exit();
         screen.enter();
-        this.current = screen;
+        this.current_screen = screen;
     }
 
     /**
      * @return Return a pointer to the currently active screen.
      */
     getCurrentScreen() {
-        return this.current;
+        return this.current_screen;
     }
 
     /**
@@ -82,7 +87,7 @@ export class DisplayManager {
      */
     // TODO: Probably allow to parse a screen to be rendered.
     render() {
-        if (this.current) this.current.render();
+        if (this.current_screen) this.current_screen.render();
     }
 
     /**
@@ -91,10 +96,13 @@ export class DisplayManager {
      * @return True if the assignment succeded, false otherwise (the current screen isn't a PlayScreen).
      */
     bindSiteToScreen(site: Site) {
-        if (!(this.current instanceof PlayScreen)) return false;
-        let screen = this.current;
-        screen.setSite(site);
-        return true;
+        if (!(this.current_screen instanceof PlayScreen)) return false;
+
+        let screen = this.current_screen;
+        this.current_site = this.sites.push(site) - 1;
+        screen.setSite(this.sites[this.current_site]);
+        
+        return this.current_site;
     }
 
     /**
@@ -103,13 +111,17 @@ export class DisplayManager {
      * @return True if the assignment succeeded, false otherwise.
      */
     bindEventToScreen(event: string) {
-        if (this.current == undefined) return false;
-        let screen = this.current;
+        if (this.current_screen == undefined) return false;
+        let screen = this.current_screen;
 
         window.addEventListener(event, (e) => (
             screen.handleInput(event, e)
         ));
 
         return true;
+    }
+
+    getCurrentSite() {
+        return this.sites[this.current_site];
     }
 }
