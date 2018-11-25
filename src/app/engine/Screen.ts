@@ -65,6 +65,7 @@ export class PlayScreen extends Screen {
      * Actually draw the content of the site on the screen.
      */
     render() {
+        this.focus.MixinProps(MixinNames.vision).getVisibileArea();
         let { width: site_width, height: site_height } = this.current_site.getDimensions();
         let { x: focus_x, y: focus_y } = this.focus.getPos();
         let { width: screen_width, height: screen_height } = this.getDimensions(); 
@@ -141,13 +142,10 @@ export class PlayScreen extends Screen {
                 case 'Numpad3':
                     this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 1}, this.current_site);
                     break;
-                case 'KeyV':
-                    this.player.MixinProps(MixinNames.vision).getVisibileArea();
-                    break;
                 default:
-                    this.player.MixinProps(MixinNames.damagable).decrementHp(1);
-                    console.log(this.player.MixinProps(MixinNames.damagable).getHp());
-                    break;
+                this.player.MixinProps(MixinNames.damagable).decrementHp(1);
+                console.log(this.player.MixinProps(MixinNames.damagable).getHp());
+                break;
             }
         }
 

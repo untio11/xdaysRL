@@ -26,7 +26,7 @@ export class Vision implements Mixin {
         this.lightPasses = (x: number, y: number) => (
             this.owner.getPos().site.getTile({x, y}).light_passes || this.x_ray
         );
-        this.fov = new FOV.PreciseShadowcasting(this.lightPasses);
+        this.fov = new FOV.RecursiveShadowcasting(this.lightPasses);
     }
 
 
@@ -34,9 +34,7 @@ export class Vision implements Mixin {
         let position = this.owner.getPos();
         let site = position.site;
         this.fov.compute(position.x, position.y, this.vision_radius, function(x: number, y: number, r: number, visibility: number) {
-            if (site.getTile({x, y}).light_passes) {
-                site.setExploredTile({x, y});
-            }        
+            site.setExploredTile({x, y});   
         });
     }
 }
