@@ -31,5 +31,5 @@ export const treeTemplate: TileProperties = {
     randomized_fg: true,
     bg: Color.hsl2rgb(Color.add(Color.rgb2hsl(colors.wood_light), [0, 0, -0.185])),
     walkable: false,
-    
+    light_passes: false
 };

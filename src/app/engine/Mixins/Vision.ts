@@ -35,7 +35,7 @@ export class Vision implements Mixin {
         let site = position.site;
         this.fov.compute(position.x, position.y, this.vision_radius, function(x: number, y: number, r: number, visibility: number) {
             if (site.getTile({x, y}).light_passes) {
-                site.setExploredTile(position);
+                site.setExploredTile({x, y});
             }        
         });
     }
