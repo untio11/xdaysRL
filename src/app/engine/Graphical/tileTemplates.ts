@@ -16,7 +16,7 @@ export const grassTemplate: TileProperties = {
     char: [',', '.'],
     fg: colors.grass_green,
     randomized_fg: true,
-    frequency: 0.2,
+    frequency: 0.5,
     bg: Color.hsl2rgb(Color.add(Color.rgb2hsl(colors.grass_green), [0, 0, -0.18])),
     walkable: true
 };

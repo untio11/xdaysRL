@@ -1,4 +1,4 @@
-import { Display } from 'rot-js';
+import { Display, Color } from 'rot-js';
 import { Site, position } from "./Site";
 import { Hero } from "./Hero";
 import { Entity } from "./Entities/Entity";
@@ -65,14 +65,15 @@ export class PlayScreen extends Screen {
      * Actually draw the content of the site on the screen.
      */
     render() {
-        this.current_site.explore(this.focus.MixinProps(MixinNames.vision).getVisibileArea());
-        let { width: site_width, height: site_height } = this.current_site.getDimensions();
-        let { x: focus_x, y: focus_y } = this.focus.getPos();
-        let { width: screen_width, height: screen_height } = this.getDimensions(); 
+        const visibile_area = this.focus.MixinProps(MixinNames.vision).getVisibileArea();
+        this.current_site.explore(visibile_area);
+        const { width: site_width, height: site_height } = this.current_site.getDimensions();
+        const { x: focus_x, y: focus_y } = this.focus.getPos();
+        const { width: screen_width, height: screen_height } = this.getDimensions(); 
 
         // We want the player to be in the middle of the screen, but we don't want the view to go over the edge of the map.
         // So the top left corner is at most (0,0).
-        let topLeft = new position (
+        const topLeft = new position (
             Math.max(0, focus_x - (screen_width / 2)),
             Math.max(0, focus_y - (screen_height / 2)),
             this.focus.getPos().site
@@ -85,13 +86,16 @@ export class PlayScreen extends Screen {
         this.display.clear();
         for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
-                let tile = this.current_site.getTile({x, y});
+                const tile = this.current_site.getTile({x, y});
+                const in_vision = this.containsPoint(visibile_area, [x, y]);
+                const foreground = in_vision ? tile.getForeground() : this.dimColor(tile.getForeground());
+                const background = in_vision ? tile.getBackground() : this.dimColor(tile.getBackground());
                 if (tile.explored) {
                     this.display.draw(
                     x - topLeft.x,
                     y - topLeft.y,
                     tile.getCharacter(),
-                    tile.getForeground(),
+                    foreground,
                     tile.getBackground());
                 }
             }
@@ -104,6 +108,19 @@ export class PlayScreen extends Screen {
             this.focus.getForeground(),
             this.focus.getBackground()
         );
+    }
+
+    private dimColor(color: string) {
+        const color_code = Color.rgb2hsl(Color.fromString(color));
+        return Color.toRGB(Color.add(color_code, [0, -0.5 * color_code[1], 0]));
+    }
+
+    private containsPoint(collection: Array<[number, number]>, target: [number, number]) {
+        for (const point of collection) {
+            if (point[0] == target[0] && point[1] == target[1]) return true;
+        }
+
+        return false;
     }
 
     /**

@@ -30,7 +30,7 @@ export class Vision implements Mixin {
     }
 
     /**
-     * Compute the area that's visibile from the owners position.
+     * Compute the area that's visibile from the owners positiion
      * @returns An array filled with coordinates of visibile tiles.
      */
     getVisibileArea(): Array<[number, number]> {
