@@ -1,49 +1,53 @@
-import { Scheduler, Engine } from "rot-js";
+import { EngineWrapper } from "./Engine";
 import { Entity } from "../Entities/Entity"
 import { Hero } from "../Entities/Hero"
 import { HeroTemplate } from "../Entities/entityTemplates"
-import { DisplayManager } from "../Interface/DisplayManager"
+import { displayManager } from "../Interface/DisplayManager"
 import { PlayScreen } from "../Interface/Screen";
 import { Forest } from "../World/Site";
+import { Engine, Scheduler } from "rot-js";
 
 class Game {
-    sheduler: Scheduler;
+    scheduler: Scheduler;
     engine: Engine;
     entities: Entity[];
     player: Hero;
-    displayManager: DisplayManager;
+    port: HTMLElement;
+    i: [string, number];
 
     constructor() {
-        this.sheduler = new Scheduler.Speed();
-        this.engine = new Engine(this.sheduler);
+        this.engine = EngineWrapper.engine;
+        this.scheduler = EngineWrapper.scheduler;
         this.entities = [];
         
-        const port = document.getElementById("app");
+        // The second part of the <or> should never be called in theory.
+        this.port = document.getElementById("app") || document.body.appendChild(new HTMLElement());
         let screenSettings = { 
             width: 72,
             height: 32,
-            site: new Forest({width: 100, height:100, age: 4}),
             forceSquareRatio: true, 
             fontSize: 24,
-            target: port, 
+            target: this.port, 
             type: 'PlayScreen'
         };
         
-        if (screenSettings.target) {
-            screenSettings.target.setAttribute("style", 
+        
+        this.port.setAttribute("style", 
             "width:" + (screenSettings.width * screenSettings.fontSize).toString() + "px; " + 
             "height:" + (screenSettings.height * screenSettings.fontSize).toString() + "px; "
-            );
-        };
+        );
 
-        this.displayManager = new DisplayManager(new PlayScreen(screenSettings));
-
-        this.displayManager.bindEventToScreen("keydown")
-        this.player = new Hero(HeroTemplate, this.displayManager.getCurrentSite());
+        this.i = displayManager.add(new PlayScreen(screenSettings));
+        displayManager.bindEventToScreen("keydown", this.i)
+        this.player = new Hero(HeroTemplate, displayManager.getCurrentSite());
+        let screen = displayManager.getCurrentScreen(PlayScreen.type) as PlayScreen;
+        if (screen) screen.spawnPlayer(this.player);
     }
 
     start() {
-        this.displayManager.render();
+        this.scheduler.add(this.player, true);
+        displayManager.render(this.i);
+        this.engine.start();
     }
 }
 

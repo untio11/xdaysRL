@@ -26,7 +26,7 @@ export abstract class Site {
 
         // Initialize to epmty 2D-array
         this.map_data = range(this.width).map(() => (
-            new Array(this.height).map(() => (new Tile()))
+            new Array(this.height).map((i) => (new Tile()))
         ));
     }
 

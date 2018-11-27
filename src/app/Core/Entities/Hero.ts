@@ -1,6 +1,6 @@
 import { Entity, EntityProperties } from "./Entity";
-import { colors, Color } from "../Graphical/colors";
 import { Site } from "../World/Site";
+import { EngineWrapper } from "../Engine/Engine";
 
 /**
  * Class defining the player character. It's a subclass of entity.
@@ -11,6 +11,6 @@ export class Hero extends Entity {
     }
 
     act() {
-        
+        EngineWrapper.engine.lock();
     }
 }
