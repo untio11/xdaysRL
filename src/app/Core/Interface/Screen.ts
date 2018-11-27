@@ -11,14 +11,24 @@ import { MixinNames } from "../Mixins/MixinNames";
 export abstract class Screen { // For now it's nothing much, but I guess I might need it later
     readonly display: Display;
     private dimensions: {width: number, height: number}; // Will probaly change i guess
+<<<<<<< HEAD:src/app/Core/Interface/Screen.ts
     static readonly type: string = "Abstract";
     readonly _type: string = Screen.type;
     port?: HTMLElement;
+=======
+    port?: HTMLElement;
+    readonly id: number;
+    private static counter = 0;
+>>>>>>> help:src/app/Core/Interface/Screen.ts
 
     constructor(properties: ScreenOptions) {
         this.display = new Display(properties);
         this.dimensions = {width: properties.width, height: properties.height};
+<<<<<<< HEAD:src/app/Core/Interface/Screen.ts
         this.port = properties.port;
+=======
+        this.id = Screen.counter++;
+>>>>>>> help:src/app/Core/Interface/Screen.ts
     }
 
     
@@ -43,6 +53,16 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
     bindPort(port: HTMLElement) {
         port.appendChild(this.display.getContainer());
     }
+<<<<<<< HEAD:src/app/Core/Interface/Screen.ts
+=======
+
+    bindEvent(event: string) {
+        let screen = this;
+        window.addEventListener(event, (e) => (
+            screen.handleInput(event, e)
+        ));
+    }
+>>>>>>> help:src/app/Core/Interface/Screen.ts
 }
 
 /**
@@ -201,7 +221,7 @@ export class PlayScreen extends Screen {
      * Binds a site to this screen.
      * @param site Reference to the site to be bounded to this Screen.
      */
-    setSite(site: Site) {
+    bindSite(site: Site) {
         this.current_site = site;
     }
 
@@ -222,16 +242,20 @@ export interface DisplayOptions {
     fontSize?: number,
     bg?: string,
     forceSquareRatio?: boolean,
-    target: HTMLElement | null
 }
 
 /**
  * Extend the DisplayOptions with some more Screen-specific options.
  */
 export interface ScreenOptions extends DisplayOptions {
+<<<<<<< HEAD:src/app/Core/Interface/Screen.ts
     site?: Site,
     type: string,
     port?: HTMLElement
 }
 
 export const nullScreen = new PlayScreen({width: 0, height: 0, type: "null", target: null});
+=======
+    site?: Site
+}
+>>>>>>> help:src/app/Core/Interface/Screen.ts
