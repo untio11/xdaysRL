@@ -1,5 +1,5 @@
 import { Mixin } from "./Mixins";
-import { Site, position } from '../Site';
+import { Site, position } from '../World/Site';
 import { Entity } from "../Entities/Entity";
 
 export const ID: string = 'Moveable';
@@ -43,5 +43,13 @@ export class Moveable implements Mixin {
      */
     private newPos(dx: number, dy: number): position {
         return this.owner.getPos().add(dx, dy);
+    }
+
+    getSpeed() {
+        return this.speed;
+    }
+
+    setSpeed(new_speed: number) {
+        this.speed = Math.max(new_speed, 0);
     }
 }

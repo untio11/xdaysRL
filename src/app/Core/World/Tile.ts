@@ -1,6 +1,6 @@
-import { Glyph } from './Glyph'
-import { Color } from "./Graphical/colors";
-import { TileProperties } from "./Graphical/tileTemplates";
+import { Glyph } from '../Graphical/Glyph'
+import { Color } from "../Graphical/colors";
+import { TileProperties } from "../Graphical/tileTemplates";
 
 /**
  * Describes the thing the world is made out of.

@@ -1,9 +1,9 @@
 import { Display, Color } from 'rot-js';
-import { Site, position } from "./Site";
-import { Hero } from "./Hero";
-import { Entity } from "./Entities/Entity";
-import { HeroTemplate } from "./Entities/entityTemplates";
-import { MixinNames } from "./Mixins/MixinNames";
+import { Site, Forest, position } from "../World/Site";
+import { Hero } from "../Entities/Hero";
+import { Entity } from "../Entities/Entity";
+import { HeroTemplate } from "../Entities/entityTemplates";
+import { MixinNames } from "../Mixins/MixinNames";
 
 /**
  * Wrapper around rot.Display for some extra functionality.
@@ -11,10 +11,14 @@ import { MixinNames } from "./Mixins/MixinNames";
 export abstract class Screen { // For now it's nothing much, but I guess I might need it later
     readonly display: Display;
     private dimensions: {width: number, height: number}; // Will probaly change i guess
+    port?: HTMLElement;
+    readonly id: number;
+    private static counter = 0;
 
     constructor(properties: ScreenOptions) {
         this.display = new Display(properties);
         this.dimensions = {width: properties.width, height: properties.height};
+        this.id = Screen.counter++;
     }
 
     
@@ -24,21 +28,38 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
 
     abstract render(): void;
 
+    refresh() {
+        this.display.clear();
+        this.render();
+    }
+
     /** @returns The dimensions in the form {width, height}. */
     getDimensions() {
         return this.dimensions;
     }
 
     abstract handleInput(eventName: string, event: Event): void;
+
+    bindPort(port: HTMLElement) {
+        port.appendChild(this.display.getContainer());
+    }
+
+    bindEvent(event: string) {
+        let screen = this;
+        window.addEventListener(event, (e) => (
+            screen.handleInput(event, e)
+        ));
+    }
 }
 
 /**
  * Class for playscreens. Playscreens have a site linked to them. Might want to move the player down to the site, together with the other entities.
  */
 export class PlayScreen extends Screen {
-    focus: Entity;
-    player: Hero;
-    current_site: Site;
+    focus?: Entity;
+    current_site?: Site;
+    static readonly type: string = "PlayScreen";
+    readonly _type: string = PlayScreen.type;
 
     /**
      * Build a new PlayScreen and spawn the player on a random floortile.
@@ -47,12 +68,21 @@ export class PlayScreen extends Screen {
     constructor(properties: ScreenOptions) {
         super(properties);
         this.current_site = properties.site;
-        this.player = new Hero(HeroTemplate, this.current_site);
-        let spawn = this.current_site.getRandomFloorPosition();
-        this.player.setPos(spawn);
-        this.focus = this.player;
     }
 
+    /** For now just puts the player on a random floortile */
+    spawnPlayer(player: Entity) {
+        if (!this.current_site) return;
+        
+        player.setPos(this.current_site.getRandomFloorPosition());
+        this.setFocus(player);
+    }
+
+    setFocus(new_focus: Entity) {
+        this.focus = new_focus;
+    }
+
+    /** Probably want to enforce player spawn here. */
     enter() {
         console.log("entered a playscreen");
     }
@@ -65,6 +95,8 @@ export class PlayScreen extends Screen {
      * Actually draw the content of the site on the screen.
      */
     render() {
+        if (!this.port || !this.focus || !this.current_site) return;
+
         const visibile_area = this.focus.MixinProps(MixinNames.vision).getVisibileArea();
         this.current_site.explore(visibile_area);
         const { width: site_width, height: site_height } = this.current_site.getDimensions();
@@ -82,8 +114,9 @@ export class PlayScreen extends Screen {
         // Similar for the lower right corner.
         topLeft.x = Math.min(topLeft.x, site_width - screen_width);
         topLeft.y = Math.min(topLeft.y, site_height - screen_height);
-
+        
         this.display.clear();
+
         for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
                 const tile = this.current_site.getTile({x, y});
@@ -129,51 +162,53 @@ export class PlayScreen extends Screen {
      * @param event 
      */
     handleInput(eventName: string, event: KeyboardEvent) {
+        if (!this.focus) return;
+
         if (eventName == "keydown") {
             switch (event.code) {
                 case 'ArrowUp':
                 case 'Numpad8':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 0, dy: -1}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: 0, dy: -1}, this.current_site);
                     break;
                 case 'ArrowDown':
                 case 'Numpad2':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 0, dy: 1}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: 0, dy: 1}, this.current_site);
                     break;
                 case 'ArrowLeft':
                 case 'Numpad4':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: 0}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: 0}, this.current_site);
                     break;
                 case 'ArrowRight':
                 case 'Numpad6':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 0}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 0}, this.current_site);
                     break;
                 case 'Numpad7':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: -1}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: -1}, this.current_site);
                     break;
                 case 'Numpad9':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: -1}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: -1}, this.current_site);
                     break;
                 case 'Numpad1':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: 1}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: -1, dy: 1}, this.current_site);
                     break;
                 case 'Numpad3':
-                    this.player.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 1}, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({dx: 1, dy: 1}, this.current_site);
                     break;
                 default:
-                this.player.MixinProps(MixinNames.damagable).decrementHp(1);
-                console.log(this.player.MixinProps(MixinNames.damagable).getHp());
+                this.focus.MixinProps(MixinNames.damagable).decrementHp(1);
+                console.log(this.focus.MixinProps(MixinNames.damagable).getHp());
                 break;
             }
         }
 
-        this.render();
+        this.refresh();
     }
 
     /**
      * Binds a site to this screen.
      * @param site Reference to the site to be bounded to this Screen.
      */
-    setSite(site: Site) {
+    bindSite(site: Site) {
         this.current_site = site;
     }
 
@@ -194,13 +229,11 @@ export interface DisplayOptions {
     fontSize?: number,
     bg?: string,
     forceSquareRatio?: boolean,
-    target: HTMLElement | null
 }
 
 /**
  * Extend the DisplayOptions with some more Screen-specific options.
  */
 export interface ScreenOptions extends DisplayOptions {
-    site: Site,
-    type: string
+    site?: Site
 }

@@ -1,9 +1,9 @@
 import { Map } from 'rot-js';
 import { range } from "lodash";
 import { Tile } from "./Tile";
-import { Entity } from "./Entities/Entity";
-import { poissonDiscSampler } from "./../util/poisson-disc-sampler";
-import { grassTemplate, treeTemplate } from "./Graphical/tileTemplates";
+import { Entity } from "../Entities/Entity";
+import { poissonDiscSampler } from "../../util/poisson-disc-sampler";
+import { grassTemplate, treeTemplate } from "../Graphical/tileTemplates";
 
 /**
  * For storing a map, together with some helper functions around it.
@@ -26,7 +26,7 @@ export abstract class Site {
 
         // Initialize to epmty 2D-array
         this.map_data = range(this.width).map(() => (
-            new Array(this.height).map(() => (new Tile()))
+            new Array(this.height).map((i) => (new Tile()))
         ));
     }
 

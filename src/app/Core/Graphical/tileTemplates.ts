@@ -1,5 +1,5 @@
 import { Color, colors } from "./colors";
-import { GlyphProperties } from "./../Glyph";
+import { GlyphProperties } from "./Glyph";
 
 /**
  * Here we will define all properties a tile can have. Might want to add something cool like mixins to tiles or something.
