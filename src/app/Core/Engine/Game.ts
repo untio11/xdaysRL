@@ -3,9 +3,8 @@ import { Entity } from "../Entities/Entity"
 import { Hero } from "../Entities/Hero"
 import { HeroTemplate } from "../Entities/entityTemplates"
 import { displayManager } from "../Interface/DisplayManager"
-import { PlayScreen } from "../Interface/Screen";
-import { Forest } from "../World/Site";
-import { Engine, Scheduler } from "rot-js";
+import { PlayScreen } from "../Interface/PlayScreen";
+import { Forest } from "../World/Forest";
 
 class Game {
     constructor() {
@@ -19,7 +18,6 @@ class Game {
             type: 'PlayScreen'
         };
         
-        
         port.setAttribute("style", 
             "width:" + (screenSettings.width * screenSettings.fontSize).toString() + "px; " + 
             "height:" + (screenSettings.height * screenSettings.fontSize).toString() + "px; "
@@ -29,10 +27,13 @@ class Game {
         const main_port = displayManager.addPort(port);
         displayManager.bind(main_playscreen, main_port);
         displayManager.bindEventToScreen("keydown", main_playscreen);
-        
+        displayManager.setSite(main_playscreen, new Forest({width: 100, height: 100, age: 4}));
+        displayManager.spawnPlayer(main_playscreen);
     }
 
     start() {
+        displayManager.render();
+        EngineWrapper.engine.start();
     }
 }
 

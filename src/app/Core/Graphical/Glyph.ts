@@ -45,6 +45,11 @@ export class Glyph {
         return Color.toRGB(this.background);
     }
 
+    dimColor(color: string) {
+        const color_code = Color.rgb2hsl(Color.fromString(color));
+        return Color.toRGB(Color.hsl2rgb(Color.add(color_code, [0, -0.75 * color_code[1], 0])));
+    }
+
     /** Update the foregound color of this glyph */
     protected setForeground(new_color: [number, number, number]): void {
         this.foreground = new_color;
