@@ -1,6 +1,7 @@
 import { Moveable, ID as MoveableName } from "./Moveable";
 import { Damagable, ID as DamagableName } from "./Damagable";
 import { Vision, ID as VisionName } from "./Vision";
+import { AI, ID as AIName } from "./AI";
 
 
 /**
@@ -9,5 +10,6 @@ import { Vision, ID as VisionName } from "./Vision";
 export const Mixins: {[name: string]: any} = {
     [MoveableName]: Moveable,
     [DamagableName]: Damagable,
-    [VisionName]: Vision
+    [VisionName]: Vision,
+    [AIName]: AI
 };

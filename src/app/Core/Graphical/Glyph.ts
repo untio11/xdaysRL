@@ -36,17 +36,21 @@ export class Glyph {
     }
 
     /**@returns The foreground colour of this glyph. */
-    getForeground(): string {
-        return Color.toRGB(this.foreground);
+    getForeground(in_vision = true): string {
+        return in_vision ? Color.toRGB(this.foreground) : this.dimColor(this.foreground);
     }
     
     /**@returns The background colour of this glyph. */
-    getBackground(): string {
-        return Color.toRGB(this.background);
+    getBackground(in_vision = true): string {
+        return in_vision ? Color.toRGB(this.background) : this.dimColor(this.background);
     }
 
-    dimColor(color: string) {
-        const color_code = Color.rgb2hsl(Color.fromString(color));
+    /**
+     * Dim a color to 25% of its original saturation.
+     * @param color The color to be dimmed in rgb format.
+     */
+    dimColor(color: [number, number, number]) {
+        const color_code = Color.rgb2hsl(color);
         return Color.toRGB(Color.hsl2rgb(Color.add(color_code, [0, -0.75 * color_code[1], 0])));
     }
 

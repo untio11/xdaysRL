@@ -48,19 +48,15 @@ export class Tile extends Glyph {
         return Color.randomize(color, [10, 10, 10]);
     }
 
-    getBackground(should_update?: boolean) {
-        should_update = (should_update == undefined) ? true : should_update;
-
-        return Color.toRGB(should_update && this.shouldUpdate(this.randomized_bg, this.frequency) ?
-            this.randomizeColor(this.background) :
-            this.background);
+    getBackground(in_vision = true) {
+        return Color.toRGB(in_vision && this.shouldUpdate(this.randomized_bg, this.frequency) ?
+            this.randomizeColor(Color.fromString(super.getBackground(in_vision))) :
+            Color.fromString(super.getBackground(in_vision)));
     }
 
-    getForeground(should_update?: boolean) {
-        should_update = (should_update == undefined) ? true : should_update;
-
-        return Color.toRGB(should_update && this.shouldUpdate(this.randomized_fg, this.frequency) ?
-            this.randomizeColor(this.foreground) :
-            this.foreground);
+    getForeground(in_vision = true) {
+        return Color.toRGB(in_vision && this.shouldUpdate(this.randomized_fg, this.frequency) ?
+            this.randomizeColor(Color.fromString(super.getForeground(in_vision))) :
+            Color.fromString(super.getForeground(in_vision)));
     }
 }

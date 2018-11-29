@@ -162,7 +162,9 @@ class DisplayManager {
         let screen = this.getScreen(screen_index) as PlayScreen;
         let site = screen.getSite();
         if (screen != undefined && site != undefined) {
-            screen.spawnPlayer(new Hero(HeroTemplate, site));
+            let hero = new Hero(HeroTemplate, site);
+            screen.spawnPlayer(hero);
+            return hero;
         }
     }
 }

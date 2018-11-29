@@ -12,6 +12,8 @@ export abstract class Entity extends Glyph {
     name: string;
     /** And all entities should have a position*/
     protected position: position;
+    /** The last position this entity was seen at. */
+    protected last_pos: position;
     /**An object to hold the mixins of this entity*/
     protected mixins: MixinContainer;
 
@@ -23,6 +25,12 @@ export abstract class Entity extends Glyph {
         super(properties);
         this.name = properties.name || "Placeholder";
         this.position = new position (
+            properties.x || 0,
+            properties.y || 0,
+            site
+        );
+
+        this.last_pos = new position (
             properties.x || 0,
             properties.y || 0,
             site
@@ -47,6 +55,14 @@ export abstract class Entity extends Glyph {
      */
     setPos(new_pos: position) {
         this.position = new_pos;
+    }
+
+    updateLastPos() {
+        this.last_pos = this.position;
+    }
+
+    getLastPos() {
+        return this.last_pos;
     }
 
     /**
@@ -91,6 +107,14 @@ export abstract class Entity extends Glyph {
      */
     getSpeed() {
         return this.hasMixin(MixinNames.moveable) ? this.MixinProps(MixinNames.moveable).getSpeed() : 0;
+    }
+
+    inKnownTerritory() {
+        return this.position.site.getTile(this.position).explored;
+    }
+
+    getBackground(in_vision: boolean) {
+        return this.position.site.getTile(this.position).getBackground(in_vision);
     }
 }
 

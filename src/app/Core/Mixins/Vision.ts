@@ -40,4 +40,8 @@ export class Vision implements Mixin {
         });
         return result;
     }
+
+    toggleXray() {
+        this.x_ray = !this.x_ray;
+    }
 }

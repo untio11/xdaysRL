@@ -40,6 +40,10 @@ export abstract class Site {
         return this.map_data;
     }
 
+    getEntities () {
+        return this.entities;
+    }
+
     /** Get the tile at a given position
      * @param pos Can either be a position object or given as a simple {x, y} object.
      */
@@ -85,6 +89,11 @@ export abstract class Site {
      */
     getDimensions() {
         return {width: this.width, height: this.height};
+    }
+
+    spawn(entity: Entity) {
+        entity.setPos(this.getRandomFloorPosition());
+        this.entities.push(entity);
     }
 }
 

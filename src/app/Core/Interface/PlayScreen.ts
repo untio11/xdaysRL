@@ -1,6 +1,7 @@
 import { Screen, ScreenOptions } from "./Screen";
 import { Site, position } from "../World/Site";
 import { Entity } from "../Entities/Entity";
+import { Hero } from "../Entities/Hero";
 import { MixinNames } from "../Mixins/MixinNames";
 import { EngineWrapper } from "../Engine/Engine";
 
@@ -23,12 +24,10 @@ export class PlayScreen extends Screen {
     }
 
     /** For now just puts the player on a random floortile */
-    spawnPlayer(player: Entity) {
+    spawnPlayer(player: Hero) {
         if (!this.current_site) return;
-
-        player.setPos(this.current_site.getRandomFloorPosition());
+        this.current_site.spawn(player);
         this.setFocus(player);
-        EngineWrapper.scheduler.add(player, true);
     }
 
     setFocus(new_focus: Entity) {
@@ -74,10 +73,10 @@ export class PlayScreen extends Screen {
         for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
                 const tile = this.current_site.getTile({ x, y });
-                const in_vision = this.containsPoint(visibile_area, [x, y]);
-                const foreground = in_vision ? tile.getForeground() : tile.dimColor(tile.getForeground(false));
-                const background = in_vision ? tile.getBackground() : tile.dimColor(tile.getBackground(false));
                 if (tile.explored) {
+                    const in_vision = this.containsPoint(visibile_area, [x, y]);
+                    const foreground = tile.getForeground(in_vision);
+                    const background = tile.getBackground(in_vision);
                     this.display.draw(
                         x - topLeft.x,
                         y - topLeft.y,
@@ -88,14 +87,22 @@ export class PlayScreen extends Screen {
             }
         }
 
-        this.display.draw(
-            focus_x - topLeft.x,
-            focus_y - topLeft.y,
-            this.focus.getCharacter(),
-            this.focus.getForeground(),
-            this.focus.getBackground()
-        );
-    }
+        for (const entity of this.current_site.getEntities()) {
+            if (!entity.inKnownTerritory()) continue;
+            let pos = entity.getPos();
+            const in_vision = this.containsPoint(visibile_area, [pos.x, pos.y]);
+            if (in_vision) entity.updateLastPos();
+            pos = entity.getLastPos();
+            
+            this.display.draw(
+                pos.x - topLeft.x,
+                pos.y - topLeft.y,
+                entity.getCharacter(),
+                entity.getForeground(in_vision),
+                entity.getBackground(in_vision)
+                );
+            }
+        }
 
     private containsPoint(collection: Array<[number, number]>, target: [number, number]) {
         for (const point of collection) {
@@ -117,31 +124,38 @@ export class PlayScreen extends Screen {
             switch (event.code) {
                 case 'ArrowUp':
                 case 'Numpad8':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 0, dy: -1 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 0, dy: -1 });
                     break;
                 case 'ArrowDown':
                 case 'Numpad2':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 0, dy: 1 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 0, dy: 1 });
                     break;
                 case 'ArrowLeft':
                 case 'Numpad4':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: 0 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: 0 });
                     break;
                 case 'ArrowRight':
                 case 'Numpad6':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: 0 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: 0 });
                     break;
                 case 'Numpad7':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: -1 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: -1 });
                     break;
                 case 'Numpad9':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: -1 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: -1 });
                     break;
                 case 'Numpad1':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: 1 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: 1 });
                     break;
                 case 'Numpad3':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: 1 }, this.current_site);
+                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: 1 });
+                    break;
+                case 'KeyP':
+                    const pos = this.focus.getPos();
+                    console.log("Hello, I am now at " + pos.x + ', ' + pos.y);
+                    break;
+                case 'KeyX':
+                    this.focus.MixinProps(MixinNames.vision).toggleXray();
                     break;
                 default:
                     this.focus.MixinProps(MixinNames.damagable).decrementHp(1);
@@ -151,6 +165,7 @@ export class PlayScreen extends Screen {
         }
 
         this.refresh();
+        EngineWrapper.engine.unlock()
     }
 
     /**

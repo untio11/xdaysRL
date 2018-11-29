@@ -28,7 +28,7 @@ class Game {
         displayManager.bind(main_playscreen, main_port);
         displayManager.bindEventToScreen("keydown", main_playscreen);
         displayManager.setSite(main_playscreen, new Forest({width: 100, height: 100, age: 4}));
-        displayManager.spawnPlayer(main_playscreen);
+        let hero = displayManager.spawnPlayer(main_playscreen);
     }
 
     start() {
