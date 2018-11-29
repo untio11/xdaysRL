@@ -89,17 +89,25 @@ export class PlayScreen extends Screen {
 
         for (const entity of this.current_site.getEntities()) {
             if (!entity.inKnownTerritory()) continue;
-            let pos = entity.getPos();
-            const in_vision = this.containsPoint(visibile_area, [pos.x, pos.y]);
-            if (in_vision) entity.updateLastPos();
-            pos = entity.getLastPos();
+            
+            let {x, y} = entity.getPos();
+            const is_in_vision = this.containsPoint(visibile_area, [x, y]);
+            let {x: s, y: t} = entity.getLastPos();
+            const was_in_vision = this.containsPoint(visibile_area, [s, t]);
+            if (is_in_vision) {
+                entity.updateLastPos();
+            } else if (was_in_vision) {
+                continue;
+            } 
+
+            const pos = entity.getLastPos();
             
             this.display.draw(
                 pos.x - topLeft.x,
                 pos.y - topLeft.y,
                 entity.getCharacter(),
-                entity.getForeground(in_vision),
-                entity.getBackground(in_vision)
+                entity.getForeground(is_in_vision),
+                entity.getBackground(is_in_vision)
                 );
             }
         }
