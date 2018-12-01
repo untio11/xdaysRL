@@ -1,6 +1,7 @@
 import { Mixin } from "./Mixins";
 import { Entity } from "../Entities/Entity";
 import { FOV } from "rot-js";
+import { HashMap } from "../../util/DiscountHashmap";
 
 export const ID: string = 'Vision';
 
@@ -32,11 +33,11 @@ export class Vision implements Mixin {
      * Compute the area that's visibile from the owners positiion
      * @returns An array filled with coordinates of visibile tiles.
      */
-    getVisibileArea(): Array<[number, number]> {
+    getVisibileArea(): HashMap {
         let position = this.owner.getPos();
-        let result = new Array<[number, number]>();
+        let result = new HashMap();
         this.fov.compute(position.x, position.y, this.vision_radius, function(x: number, y: number, r: number, visibility: number) {
-            result.push([x, y]);
+            result[x + ',' + y] = {x, y};
         });
         return result;
     }

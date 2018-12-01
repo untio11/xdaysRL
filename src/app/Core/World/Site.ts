@@ -1,6 +1,7 @@
 import { Map } from 'rot-js';
 import { range } from "lodash";
 import { Tile } from "./Tile";
+import { HashMap } from "../../util/DiscountHashmap";
 import { Entity } from "../Entities/Entity";
 
 export { Map, Tile }
@@ -56,9 +57,9 @@ export abstract class Site {
         }
     }
 
-    explore(coordinates: Array<[number, number]>) {
-        for (const point of coordinates) {
-            this.setExploredTile({x: point[0], y: point[1]});
+    explore(coordinates: HashMap) {
+        for (const point of Object.keys(coordinates)) {
+            this.setExploredTile(coordinates[point]);
         }
     }
 

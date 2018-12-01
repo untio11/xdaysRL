@@ -3,6 +3,7 @@ import { Site, position } from "../World/Site";
 import { Entity } from "../Entities/Entity";
 import { Hero } from "../Entities/Hero";
 import { MixinNames } from "../Mixins/MixinNames";
+import { HashMap } from "../../util/DiscountHashmap";
 import { EngineWrapper } from "../Engine/Engine";
 
 /**
@@ -74,7 +75,7 @@ export class PlayScreen extends Screen {
             for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
                 const tile = this.current_site.getTile({ x, y });
                 if (tile.explored) {
-                    const in_vision = this.containsPoint(visibile_area, [x, y]);
+                    const in_vision = this.containsPoint(visibile_area, (x + ',' + y));
                     const foreground = tile.getForeground(in_vision);
                     const background = tile.getBackground(in_vision);
                     this.display.draw(
@@ -91,9 +92,9 @@ export class PlayScreen extends Screen {
             if (!entity.inKnownTerritory()) continue;
             
             let {x, y} = entity.getPos();
-            const is_in_vision = this.containsPoint(visibile_area, [x, y]);
+            const is_in_vision = this.containsPoint(visibile_area, x + ',' + y);
             let {x: s, y: t} = entity.getLastPos();
-            const was_in_vision = this.containsPoint(visibile_area, [s, t]);
+            const was_in_vision = this.containsPoint(visibile_area, s + ',' + t);
             if (is_in_vision) {
                 entity.updateLastPos();
             } else if (was_in_vision) {
@@ -112,12 +113,8 @@ export class PlayScreen extends Screen {
             }
         }
 
-    private containsPoint(collection: Array<[number, number]>, target: [number, number]) {
-        for (const point of collection) {
-            if (point[0] == target[0] && point[1] == target[1]) return true;
-        }
-
-        return false;
+    private containsPoint(collection: HashMap, target: string) {
+        return collection[target] != undefined
     }
 
     /**
