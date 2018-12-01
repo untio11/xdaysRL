@@ -52,17 +52,8 @@ export abstract class Screen { // For now it's nothing much, but I guess I might
         return this.dimensions;
     }
 
-    abstract handleInput(eventName: string, event: Event): void;
-
     bindPort(port: HTMLElement) {
         port.appendChild(this.display.getContainer());
         this.port = port;
-    }
-
-    bindEvent(event: string) {
-        let screen = this;
-        window.addEventListener(event, (e) => (
-            screen.handleInput(event, e)
-        ));
     }
 }

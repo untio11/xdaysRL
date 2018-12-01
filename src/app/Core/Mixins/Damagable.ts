@@ -1,4 +1,4 @@
-import { Mixin } from "./Mixins";
+import { Mixin } from "./Mixin";
 import { Entity } from "../Entities/Entity";
 
 export const ID: string = 'Damagable';

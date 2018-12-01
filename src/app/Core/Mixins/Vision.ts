@@ -1,4 +1,4 @@
-import { Mixin } from "./Mixins";
+import { Mixin } from "./Mixin";
 import { Entity } from "../Entities/Entity";
 import { FOV } from "rot-js";
 import { HashMap } from "../../util/DiscountHashmap";

@@ -4,6 +4,7 @@ import { Hero } from "../Entities/Hero";
 import { HeroTemplate } from "../Entities/entityTemplates";
 import { Site } from "../World/Site";
 import { PlayScreen } from "./PlayScreen";
+import { inputHandler } from "./InputHandler";
 
 /**
  * A manager for handiling Screens. It should keep track of multiple screens and binding of sites and event listeners goes through this class.
@@ -41,7 +42,7 @@ class DisplayManager {
 
     bindEventToScreen(event: string, screen_index: number) {
         let screen = this.getScreen(screen_index);
-        if (screen != undefined) screen.bindEvent(event);
+        if (screen != undefined) inputHandler.bindEventListenerToScreen(event, screen);
     }
 
     /**

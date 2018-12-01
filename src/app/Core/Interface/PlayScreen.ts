@@ -11,6 +11,7 @@ import { EngineWrapper } from "../Engine/Engine";
  */
 export class PlayScreen extends Screen {
     focus?: Entity;
+    player?: Hero;
     current_site?: Site;
     static readonly type: string = "PlayScreen";
     readonly _type: string = PlayScreen.type;
@@ -27,12 +28,18 @@ export class PlayScreen extends Screen {
     /** For now just puts the player on a random floortile */
     spawnPlayer(player: Hero) {
         if (!this.current_site) return;
+
         this.current_site.spawn(player);
         this.setFocus(player);
+        this.setPlayer(player);
     }
 
     setFocus(new_focus: Entity) {
         this.focus = new_focus;
+    }
+
+    setPlayer(hero: Hero) {
+        this.player = hero;
     }
 
     /** Probably want to enforce player spawn here. */
@@ -117,60 +124,12 @@ export class PlayScreen extends Screen {
         return collection[target] != undefined
     }
 
-    /**
-     * Map the event to an action. Might externalize this.
-     * @param eventName 
-     * @param event 
-     */
-    handleInput(eventName: string, event: KeyboardEvent) {
-        if (!this.focus) return;
+    getFocus() {
+        return this.focus;
+    }
 
-        if (eventName == "keydown") {
-            switch (event.code) {
-                case 'ArrowUp':
-                case 'Numpad8':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 0, dy: -1 });
-                    break;
-                case 'ArrowDown':
-                case 'Numpad2':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 0, dy: 1 });
-                    break;
-                case 'ArrowLeft':
-                case 'Numpad4':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: 0 });
-                    break;
-                case 'ArrowRight':
-                case 'Numpad6':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: 0 });
-                    break;
-                case 'Numpad7':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: -1 });
-                    break;
-                case 'Numpad9':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: -1 });
-                    break;
-                case 'Numpad1':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: -1, dy: 1 });
-                    break;
-                case 'Numpad3':
-                    this.focus.MixinProps(MixinNames.moveable).tryMove({ dx: 1, dy: 1 });
-                    break;
-                case 'KeyP':
-                    const pos = this.focus.getPos();
-                    console.log("Hello, I am now at " + pos.x + ', ' + pos.y);
-                    break;
-                case 'KeyX':
-                    this.focus.MixinProps(MixinNames.vision).toggleXray();
-                    break;
-                default:
-                    this.focus.MixinProps(MixinNames.damagable).decrementHp(1);
-                    console.log(this.focus.MixinProps(MixinNames.damagable).getHp());
-                    break;
-            }
-        }
-
-        this.refresh();
-        EngineWrapper.engine.unlock()
+    getPlayer() {
+        return this.player;
     }
 
     /**
@@ -179,6 +138,10 @@ export class PlayScreen extends Screen {
      */
     bindSite(site: Site) {
         this.current_site = site;
+    }
+
+    handleTargeting(targets: Entity[]) {
+
     }
 
     /**

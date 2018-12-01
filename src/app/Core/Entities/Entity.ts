@@ -100,8 +100,6 @@ export abstract class Entity extends Glyph {
         }
     }
 
-    abstract act(...args: any): void;
-
     /**
      * If the entity has the Moveable mixin, it returs the speed, otherwise, it wil return 0 for stationary entities.
      */

@@ -41,8 +41,21 @@ export abstract class Site {
         return this.map_data;
     }
 
-    getEntities () {
-        return this.entities;
+    getEntities(area?: HashMap) {
+        if (area) {
+            let result: Entity[] = [];
+            for (const point of Object.keys(area)) {
+                for (const entity of this.entities) {
+                    const {x, y} = entity.getPos();
+                    if (area[point].x == x && area[point].y == y) {
+                        result.push(entity);
+                    }
+                }
+            }
+            return result;
+        } else {
+            return this.entities;
+        }
     }
 
     /** Get the tile at a given position
@@ -92,8 +105,8 @@ export abstract class Site {
         return {width: this.width, height: this.height};
     }
 
-    spawn(entity: Entity) {
-        entity.setPos(this.getRandomFloorPosition());
+    spawn(entity: Entity, position?: position) {
+        entity.setPos(position || this.getRandomFloorPosition());
         this.entities.push(entity);
     }
 }

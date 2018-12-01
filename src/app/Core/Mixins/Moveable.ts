@@ -1,4 +1,4 @@
-import { Mixin } from "./Mixins";
+import { Mixin } from "./Mixin";
 import { Site, position } from '../World/Site';
 import { Entity } from "../Entities/Entity";
 

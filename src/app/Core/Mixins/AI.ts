@@ -1,4 +1,4 @@
-import { Mixin } from "./Mixins";
+import { Mixin } from "./Mixin";
 import { ID as MoveableName } from "./Moveable";
 import { Entity } from "../Entities/Entity";
 

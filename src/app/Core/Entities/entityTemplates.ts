@@ -6,7 +6,7 @@ export const HeroTemplate: EntityProperties = {
     char: '@',
     mixins: [MixinNames.moveable, MixinNames.damagable, MixinNames.vision],
     mixin_options: {
-        [MixinNames.moveable]: {speed: 34},
+        [MixinNames.moveable]: {speed: 30},
         [MixinNames.damagable]: {starting_hp: 69},
         [MixinNames.vision]: {vision_radius: 7}
     },

@@ -5,6 +5,7 @@ import { HeroTemplate } from "../Entities/entityTemplates"
 import { displayManager } from "../Interface/DisplayManager"
 import { PlayScreen } from "../Interface/PlayScreen";
 import { Forest } from "../World/Forest";
+import { inputHandler } from "../Interface/InputHandler";
 
 class Game {
     constructor() {
