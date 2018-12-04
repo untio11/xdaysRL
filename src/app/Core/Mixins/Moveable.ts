@@ -29,9 +29,15 @@ export class Moveable implements Mixin {
         let site = this.owner.getPos().site; 
         let target_pos = this.newPos(move.dx, move.dy);
         let target_tile = site.getTile(target_pos);
-        if (target_tile.walkable) {
-            this.owner.setPos(target_pos);
-            return true;
+        let current_tile = site.getTile(this.owner.getPos());
+
+        if (current_tile.tryExit(this.owner)) {
+            if (target_tile.tryEnter(this.owner)) {
+                current_tile.exit(this.owner);
+                this.owner.setPos(target_pos);
+                target_tile.enter(this.owner);
+                return true;
+            }
         }
 
         return false;

@@ -1,6 +1,7 @@
 import { Glyph } from '../Graphical/Glyph'
 import { Color } from "../Graphical/colors";
 import { TileProperties } from "../Graphical/tileTemplates";
+import { Entity } from "../Entities/Entity";
 
 /**
  * Describes the thing the world is made out of.
@@ -21,6 +22,9 @@ export class Tile extends Glyph {
     light_passes: boolean;
     /** Wether this tile has been seen yet. */
     explored: boolean;
+    /** Entities on this tile */
+    entities: {[id: string]: Entity};
+    
 
     
     /**
@@ -30,6 +34,7 @@ export class Tile extends Glyph {
     constructor(properties?: TileProperties) {
         super(properties);
         properties = properties || {};
+        this.entities = {};
         this.walkable = properties.walkable || false;
         this.randomized_fg = properties.randomized_fg || false;
         this.randomized_bg = properties.randomized_bg || false;
@@ -58,5 +63,26 @@ export class Tile extends Glyph {
         return Color.toRGB(in_vision && this.shouldUpdate(this.randomized_fg, this.frequency) ?
             this.randomizeColor(Color.fromString(super.getForeground(in_vision))) :
             Color.fromString(super.getForeground(in_vision)));
+    }
+
+    tryEnter(thing: Entity): boolean {
+        return this.isWalkable();
+    }
+
+    enter(thing: Entity) {
+        this.entities[thing.id] = thing;
+    }
+
+    tryExit(thing: Entity): boolean {
+        return true;
+    }
+    
+    exit(thing: Entity) {
+        const index = thing.id;
+        delete this.entities[index];
+    }
+
+    private isWalkable() {
+        return this.walkable && Object.keys(this.entities).length == 0;
     }
 }

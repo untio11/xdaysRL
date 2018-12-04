@@ -10,7 +10,7 @@ export interface TileProperties extends GlyphProperties {
     randomized_bg?: boolean;
     frequency?: number;
     light_passes?: boolean;
-}
+};
 
 export const grassTemplate: TileProperties = {
     char: [',', '.'],
