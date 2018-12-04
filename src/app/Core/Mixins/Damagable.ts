@@ -12,6 +12,7 @@ export class Damagable implements Mixin {
     /** Keeps track of the amount of health this entity has left */
     health: number;
     max_health: number;
+    targeted: boolean;
     
     /**
      * Might want to add starting health and stuff like that. Maybe defense as well.
@@ -22,6 +23,7 @@ export class Damagable implements Mixin {
         this.owner = owner;
         this.health = properties.starting_hp || 10;
         this.max_health = properties.max_hp || this.health;
+        this.targeted = false;
     }
 
     /**
@@ -31,6 +33,7 @@ export class Damagable implements Mixin {
      */
     decrementHp(damage: number) {
         this.health = Math.max(0, this.health - damage);
+        console.log("ouch: " + this.getHp() + '/' + this.max_health);
         return this.getHp();
     }
 
@@ -53,5 +56,9 @@ export class Damagable implements Mixin {
 
     setHp(new_hp: number) {
         this.health = Math.max(Math.min(new_hp, this.max_health), 0);
+    }
+
+    setTargeted(new_val: boolean) {
+        this.targeted = new_val;
     }
 }

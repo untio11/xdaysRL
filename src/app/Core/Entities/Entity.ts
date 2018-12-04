@@ -16,6 +16,8 @@ export abstract class Entity extends Glyph {
     protected last_pos: position;
     /**An object to hold the mixins of this entity*/
     protected mixins: MixinContainer;
+    readonly id: number;
+    protected static counter = 0;
 
     /**
      * Set the name position and glyph properties for this entity.
@@ -23,6 +25,7 @@ export abstract class Entity extends Glyph {
      */
     constructor(properties: EntityProperties, site: Site) {
         super(properties);
+        this.id = Entity.counter++;
         this.name = properties.name || "Placeholder";
         this.position = new position (
             properties.x || 0,
@@ -112,7 +115,11 @@ export abstract class Entity extends Glyph {
     }
 
     getBackground(in_vision: boolean) {
-        return this.position.site.getTile(this.position).getBackground(in_vision);
+        if (this.MixinProps(MixinNames.damagable).targeted) {
+            return "yellow";
+        } else {
+            return this.position.site.getTile(this.position).getBackground(in_vision);
+        }
     }
 }
 

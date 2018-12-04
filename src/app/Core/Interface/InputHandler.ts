@@ -32,6 +32,7 @@ class InputHandler {
             switch (this.mode) {
             case inputModes.OverWorld:
                 this.OverWorldMap(screen as PlayScreen, event.code);   
+                EngineWrapper.engine.unlock()
                 break;
             case inputModes.Targeting:
                 this.TargetingMap(screen as PlayScreen, event.code);
@@ -42,7 +43,6 @@ class InputHandler {
         }
 
         screen.refresh();
-        EngineWrapper.engine.unlock()
     }
 
     private OverWorldMap(screen: PlayScreen, input: string) {
@@ -87,7 +87,12 @@ class InputHandler {
                 player.MixinProps(MixinNames.vision).toggleXray();
                 break;
             case 'KeyA':
+                EngineWrapper.engine.lock();
+                player.MixinProps(MixinNames.attack).updateTargetList();
+                if (player.MixinProps(MixinNames.attack).getTargets().length == 0) break;
+                player.MixinProps(MixinNames.attack).getCurrentTarget();
                 player.MixinProps(MixinNames.attack).target();
+                this.switchMode(inputModes.Targeting);
                 break;
             default:
                 break;
@@ -95,7 +100,36 @@ class InputHandler {
     }
 
     private TargetingMap(screen: PlayScreen, input: string) {
-        
+        let player = screen.getPlayer();
+        let focus = screen.getFocus();
+        if (player == undefined || focus == undefined) return;
+
+        switch (input) {
+            case 'ArrowUp':
+                player.MixinProps(MixinNames.attack).nextTarget();
+                break; 
+            case 'ArrowDown':
+                player.MixinProps(MixinNames.attack).previousTarget();
+                break;
+            case 'ArrowLeft':
+                break;
+            case 'ArrowRight':
+                break;
+            case 'Enter':
+                let target = player.MixinProps(MixinNames.attack).getCurrentTarget();
+                player.MixinProps(MixinNames.attack).attack(target);
+                this.switchMode(inputModes.OverWorld);
+                EngineWrapper.engine.unlock();
+                break;
+            case 'KeyA':
+            case 'Escape':
+                this.switchMode(inputModes.OverWorld);
+                player.MixinProps(MixinNames.attack).untarget();
+                EngineWrapper.engine.unlock();
+                break;
+            default:
+                break;
+        }
     }
 }
 

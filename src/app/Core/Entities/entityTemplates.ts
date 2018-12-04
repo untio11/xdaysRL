@@ -4,11 +4,12 @@ import { colors } from "../Graphical/colors";
 
 export const HeroTemplate: EntityProperties = {
     char: '@',
-    mixins: [MixinNames.moveable, MixinNames.damagable, MixinNames.vision],
+    mixins: [MixinNames.moveable, MixinNames.damagable, MixinNames.vision, MixinNames.attack],
     mixin_options: {
         [MixinNames.moveable]: {speed: 30},
         [MixinNames.damagable]: {starting_hp: 69},
-        [MixinNames.vision]: {vision_radius: 7}
+        [MixinNames.vision]: {vision_radius: 13},
+        [MixinNames.attack]: {range: 10}
     },
     fg: [255, 255, 255],
     name: 'Player'
