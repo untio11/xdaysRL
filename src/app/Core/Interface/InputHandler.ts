@@ -30,26 +30,27 @@ class InputHandler {
     processInput(eventName: string, event: KeyboardEvent, screen: Screen) {
         if (eventName == "keydown") {
             switch (this.mode) {
-            case inputModes.OverWorld:
+                case inputModes.OverWorld:
                 this.OverWorldMap(screen as PlayScreen, event.code);   
-                EngineWrapper.engine.unlock()
                 break;
-            case inputModes.Targeting:
+                case inputModes.Targeting:
                 this.TargetingMap(screen as PlayScreen, event.code);
                 break;
-            default:
+                default:
                 break;
             }
         }
-
+        
+        if (EngineWrapper.should_unlock) EngineWrapper.engine.unlock();
         screen.refresh();
     }
-
+    
     private OverWorldMap(screen: PlayScreen, input: string) {
         let player = screen.getPlayer();
         let focus = screen.getFocus();
         if (player == undefined || focus == undefined) return;
 
+        EngineWrapper.should_unlock = true;
         switch (input) {
             case 'ArrowUp':
             case 'Numpad8':
@@ -82,17 +83,19 @@ class InputHandler {
             case 'KeyP':
                 const pos = player.getPos();
                 console.log("Hello, I am now at " + pos.x + ', ' + pos.y);
+                EngineWrapper.should_unlock = false;
                 break;
             case 'KeyX':
                 player.MixinProps(MixinNames.vision).toggleXray();
+                EngineWrapper.should_unlock = false;
                 break;
             case 'KeyA':
-                EngineWrapper.engine.lock();
                 player.MixinProps(MixinNames.attack).updateTargetList();
                 if (player.MixinProps(MixinNames.attack).getTargets().length == 0) break;
                 player.MixinProps(MixinNames.attack).getCurrentTarget();
                 player.MixinProps(MixinNames.attack).target();
                 this.switchMode(inputModes.Targeting);
+                EngineWrapper.should_unlock = false;
                 break;
             default:
                 break;
@@ -104,6 +107,7 @@ class InputHandler {
         let focus = screen.getFocus();
         if (player == undefined || focus == undefined) return;
 
+        EngineWrapper.should_unlock = false;
         switch (input) {
             case 'ArrowUp':
                 player.MixinProps(MixinNames.attack).nextTarget();
@@ -119,13 +123,11 @@ class InputHandler {
                 let target = player.MixinProps(MixinNames.attack).getCurrentTarget();
                 player.MixinProps(MixinNames.attack).attack(target);
                 this.switchMode(inputModes.OverWorld);
-                EngineWrapper.engine.unlock();
                 break;
             case 'KeyA':
             case 'Escape':
                 this.switchMode(inputModes.OverWorld);
                 player.MixinProps(MixinNames.attack).untarget();
-                EngineWrapper.engine.unlock();
                 break;
             default:
                 break;

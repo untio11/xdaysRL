@@ -61,14 +61,14 @@ export class Attack implements Mixin {
     }
 
     nextTarget() {
-        this.getCurrentTarget().MixinProps(DamagableName).setTargeted(false);
+        this.untarget()
         this.current_target = (this.current_target + 1 > this.targets.length - 1) ? 0 : this.current_target + 1;
         this.target();
         return this.getCurrentTarget();
     }
 
     previousTarget() {
-        this.getCurrentTarget().MixinProps(DamagableName).setTargeted(false);
+        this.untarget();
         this.current_target = (this.current_target - 1 <= -1) ? this.targets.length - 1 : this.current_target - 1;
         this.target();
         return this.getCurrentTarget();

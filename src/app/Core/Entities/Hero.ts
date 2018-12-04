@@ -15,5 +15,6 @@ export class Hero extends Actor {
 
     act() {
         EngineWrapper.engine.lock();
+        EngineWrapper.should_unlock = false;
     }
 }
