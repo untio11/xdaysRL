@@ -17,7 +17,7 @@ export interface SiteProperties {
 export abstract class Site {
     protected abstract map: Map;
     protected map_data: Tile[][];
-    protected entities: Entity[];
+    protected entities: {[id: string]: Entity};
     readonly height: number;
     readonly width: number;
 
@@ -28,7 +28,7 @@ export abstract class Site {
     constructor(properties: SiteProperties) {
         this.width = properties.width;
         this.height = properties.height;
-        this.entities = [];
+        this.entities = {};
 
         // Initialize to epmty 2D-array
         this.map_data = range(this.width).map(() => (
@@ -43,12 +43,12 @@ export abstract class Site {
 
     getEntities(area?: HashMap) {
         if (area) {
-            let result: Entity[] = [];
+            let result: {[id: string]: Entity} = {};
             for (const point of Object.keys(area)) {
-                for (const entity of this.entities) {
-                    const {x, y} = entity.getPos();
+                for (const entity of Object.keys(this.entities)) {
+                    const {x, y} = this.entities[entity].getPos();
                     if (area[point].x == x && area[point].y == y) {
-                        result.push(entity);
+                        result[entity] = this.entities[entity];
                     }
                 }
             }
@@ -107,7 +107,12 @@ export abstract class Site {
 
     spawn(entity: Entity, position?: position) {
         entity.setPos(position || this.getRandomFloorPosition());
-        this.entities.push(entity);
+        this.entities[entity.id] = entity;
+    }
+
+    remove(entity: Entity) {
+        let dead = this.entities[entity.id];
+        if (dead != undefined) delete this.entities[entity.id];
     }
 }
 

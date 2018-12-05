@@ -95,7 +95,9 @@ export class PlayScreen extends Screen {
             }
         }
 
-        for (const entity of this.current_site.getEntities()) {
+        let entities = this.current_site.getEntities();
+        for (const id of Object.keys(entities)) {
+            let entity = entities[id];
             if (!entity.inKnownTerritory()) continue;
             
             let {x, y} = entity.getPos();
@@ -106,7 +108,7 @@ export class PlayScreen extends Screen {
                 entity.updateLastPos();
             } else if (was_in_vision) {
                 continue;
-            } 
+            }
 
             const pos = entity.getLastPos();
             

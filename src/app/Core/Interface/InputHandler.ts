@@ -123,6 +123,7 @@ class InputHandler {
                 let target = player.MixinProps(MixinNames.attack).getCurrentTarget();
                 player.MixinProps(MixinNames.attack).attack(target);
                 this.switchMode(inputModes.OverWorld);
+                EngineWrapper.should_unlock = true;
                 break;
             case 'KeyA':
             case 'Escape':

@@ -36,10 +36,17 @@ export class Attack implements Mixin {
 
     /** Update the target list by checking what entities are in range. */
     updateTargetList() {
+        this.targets = [];
         const in_range = this.range_computation.getVisibileArea();
         // Only select things that can be damaged and don't target yourself.
-        const possible_targets = this.owner.getPos().site.getEntities(in_range).filter((e) => (e.hasMixin(DamagableName) && e.id != this.owner.id));
-        this.targets = possible_targets;
+        const possible_targets = this.owner.getPos().site.getEntities(in_range);
+        for (const id of Object.keys(possible_targets)) {
+            if (!possible_targets[id].hasMixin(DamagableName) || id == this.owner.id.toString()) {
+                delete possible_targets[id];
+            } else {
+                this.targets.push(possible_targets[id]);
+            }
+        }
     }
 
     target() {

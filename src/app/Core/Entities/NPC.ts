@@ -11,7 +11,6 @@ export class NPC extends Actor {
     }
     
     act() {
-        console.log("Hisss, I am a dangerNoodle located at " + this.getPos().x + ", " + this.getPos().y);
         this.MixinProps(MixinNames.ai).act();
     }
 }

@@ -34,7 +34,7 @@ export class Damagable implements Mixin {
     decrementHp(damage: number) {
         this.health = Math.max(0, this.health - damage);
         console.log("ouch: " + this.getHp() + '/' + this.max_health);
-        return this.getHp();
+        if (this.health == 0) this.die();
     }
 
     /**
@@ -60,5 +60,10 @@ export class Damagable implements Mixin {
 
     setTargeted(new_val: boolean) {
         this.targeted = new_val;
+    }
+
+    die() {
+        // Drop items or something
+        this.owner.getPos().site.remove(this.owner);
     }
 }

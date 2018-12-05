@@ -34,8 +34,8 @@ export abstract class Entity extends Glyph {
         );
 
         this.last_pos = new position (
-            properties.x || 0,
-            properties.y || 0,
+            -1,
+            -1,
             site
         );
 
