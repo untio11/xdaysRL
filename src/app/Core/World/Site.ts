@@ -3,6 +3,7 @@ import { range } from "lodash";
 import { Tile } from "./Tile";
 import { HashMap } from "../../util/DiscountHashmap";
 import { Entity } from "../Entities/Entity";
+import { EngineWrapper } from "../Engine/Engine";
 
 export { Map, Tile }
 
@@ -113,6 +114,7 @@ export abstract class Site {
     remove(entity: Entity) {
         let dead = this.entities[entity.id];
         if (dead != undefined) delete this.entities[entity.id];
+        EngineWrapper.scheduler.remove(entity);
     }
 }
 
