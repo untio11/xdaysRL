@@ -54,6 +54,10 @@ export class Damagable implements Mixin {
         return this.health;
     }
 
+    getMaxHp() {
+        return this.max_health;
+    }
+
     setHp(new_hp: number) {
         this.health = Math.max(Math.min(new_hp, this.max_health), 0);
     }

@@ -1,9 +1,9 @@
 import { Entity } from "../Entities/Entity";
 import { NPC } from "../Entities/NPC";
-import { DangerNoodle } from "../Entities/entityTemplates";
+import { DangerNoodle } from "../Entities/EntityTemplates";
 import { Site, Map, Tile, SiteProperties } from "./Site";
 import { poissonDiscSampler } from "../../util/poisson-disc-sampler";
-import { treeTemplate, grassTemplate } from "../Graphical/tileTemplates";
+import { treeTemplate, grassTemplate } from "../Graphical/TileTemplates";
 import { EngineWrapper } from "../Engine/Engine";
 
 export interface ForestProperties extends SiteProperties {

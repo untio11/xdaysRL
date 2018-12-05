@@ -1,6 +1,6 @@
 import { Glyph } from '../Graphical/Glyph'
 import { Color } from "../Graphical/colors";
-import { TileProperties } from "../Graphical/tileTemplates";
+import { TileProperties } from "../Graphical/TileTemplates";
 import { Entity } from "../Entities/Entity";
 
 /**

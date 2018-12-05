@@ -1,6 +1,5 @@
 import { EntityProperties } from "./Entity";
 import { MixinNames } from "../Mixins/MixinNames";
-import { colors } from "../Graphical/colors";
 
 export const HeroTemplate: EntityProperties = {
     char: '@',

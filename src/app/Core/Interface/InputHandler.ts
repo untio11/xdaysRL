@@ -3,6 +3,7 @@ import { MixinNames } from "../Mixins/MixinNames";
 import { EngineWrapper } from "../Engine/Engine";
 import { PlayScreen } from "./PlayScreen";
 import { Screen } from "./Screen";
+import { displayManager } from "./DisplayManager";
 
 export enum inputModes {
     OverWorld = 1,
@@ -42,7 +43,7 @@ class InputHandler {
         }
         
         if (EngineWrapper.should_unlock) EngineWrapper.engine.unlock();
-        screen.refresh();
+        displayManager.render()
     }
     
     private OverWorldMap(screen: PlayScreen, input: string) {
@@ -87,6 +88,7 @@ class InputHandler {
                 break;
             case 'KeyX':
                 player.MixinProps(MixinNames.vision).toggleXray();
+                player.MixinProps(MixinNames.attack).attack(player);
                 EngineWrapper.should_unlock = false;
                 break;
             case 'KeyA':

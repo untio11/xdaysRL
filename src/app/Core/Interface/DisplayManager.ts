@@ -1,10 +1,11 @@
 import { Screen } from './Screen';
 import { remove } from "lodash";
 import { Hero } from "../Entities/Hero";
-import { HeroTemplate } from "../Entities/entityTemplates";
+import { HeroTemplate } from "../Entities/EntityTemplates";
 import { Site } from "../World/Site";
 import { PlayScreen } from "./PlayScreen";
 import { inputHandler } from "./InputHandler";
+import { MenuScreen } from "./MenuScreen";
 
 /**
  * A manager for handiling Screens. It should keep track of multiple screens and binding of sites and event listeners goes through this class.
@@ -166,6 +167,13 @@ class DisplayManager {
             let hero = new Hero(HeroTemplate, site);
             screen.spawnPlayer(hero);
             return hero;
+        }
+    }
+
+    bindPlayer(player: Hero, screen_index: number) {
+        let screen = this.getScreen(screen_index) as MenuScreen;
+        if (screen != undefined) {
+            screen.bindPlayer(player);
         }
     }
 }

@@ -24,7 +24,7 @@ export interface ScreenOptions extends DisplayOptions {
  */
 export abstract class Screen { // For now it's nothing much, but I guess I might need it later
     readonly display: Display;
-    private dimensions: {width: number, height: number}; // Will probaly change i guess
+    protected dimensions: {width: number, height: number}; // Will probaly change i guess
     port?: HTMLElement;
     readonly id: number;
     private static counter = 0;
