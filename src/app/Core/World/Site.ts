@@ -113,8 +113,12 @@ export abstract class Site {
 
     remove(entity: Entity) {
         let dead = this.entities[entity.id];
-        if (dead != undefined) delete this.entities[entity.id];
-        EngineWrapper.scheduler.remove(entity);
+        
+        if (dead != undefined) {
+            this.getTile(dead.getPos()).exit(dead);
+            delete this.entities[entity.id];
+            EngineWrapper.scheduler.remove(dead);
+        } 
     }
 }
 

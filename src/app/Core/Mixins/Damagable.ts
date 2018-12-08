@@ -1,5 +1,7 @@
 import { Mixin } from "./Mixin";
 import { Entity } from "../Entities/Entity";
+import { Stats } from "./Stats";
+import { EngineWrapper } from "../Engine/Engine";
 
 export const ID: string = 'Damagable';
 
@@ -24,6 +26,13 @@ export class Damagable implements Mixin {
         this.health = properties.starting_hp || 10;
         this.max_health = properties.max_hp || this.health;
         this.targeted = false;
+    }
+
+    getStats(): Stats {
+        return {
+            hp: this.health,
+            max_hp: this.max_health
+        };
     }
 
     /**

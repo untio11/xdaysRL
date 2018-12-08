@@ -3,6 +3,7 @@ import { Mixins } from "../Mixins/Index";
 import { MixinContainer } from "../Mixins/MixinContainer";
 import { Site, position } from "../World/Site";
 import { MixinNames } from "../Mixins/MixinNames";
+import { Stats } from "../Mixins/Stats";
 
 /**
  * Base class for all entities. Extends glyph because all entities are to be represented by a glyph.
@@ -120,6 +121,18 @@ export abstract class Entity extends Glyph {
         } else {
             return this.position.site.getTile(this.position).getBackground(in_vision);
         }
+    }
+
+    getStats() {
+        let result: Stats = {};
+        const mixins = this.mixins.getAll();
+        for (const mixin of mixins) {
+            const stats = mixin.getStats();
+            for (const stat of Object.keys(stats)) {
+                result[stat] = stats[stat];
+            }
+        }
+        return result;
     }
 }
 

@@ -2,6 +2,7 @@ import { Mixin } from "./Mixin";
 import { Entity } from "../Entities/Entity";
 import { Vision } from "./Vision";
 import { ID as DamagableName} from "./Damagable";
+import { Stats } from "./Stats";
 
 export const ID: string = 'Attack';
 
@@ -26,6 +27,12 @@ export class Attack implements Mixin {
         this.range_computation = new Vision(owner, {vision_radius: this.range});
         this.targets = [];
         this.current_target = 0;
+    }
+
+    getStats(): Stats {
+        return {
+            attack: this.damage,
+        };
     }
 
     attack(target: Entity) {

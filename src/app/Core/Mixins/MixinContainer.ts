@@ -1,14 +1,15 @@
+import { Mixin } from "./Mixin";
 /**
  * Silly construct to contain a bunch of mixins.
  */
 export class MixinContainer {
     /** index mixins by their name, store them as any, so we can call arbitrary functions on them. */
     [name: string]: any;
-    default_properties: string[] = [];
+    default_properties: {[name: string]: string} = {};
 
     constructor(mixins?: { [name: string]: any }) {
-        for (let key in this) { // Store the initial proporties of this object (which are to be ignored by collectproperties)
-            this.default_properties.push(key);
+        for (const key in this) { // Store the initial proporties of this object (which are to be ignored by collectproperties)
+            this.default_properties[key] = key;
         }
 
         if (!mixins) return;
@@ -28,5 +29,15 @@ export class MixinContainer {
         if (this.hasOwnProperty(id)) {
             delete this.id;
         }
+    }
+
+    getAll() {
+        let result: Mixin[] = [];
+        for (const key in this) {
+            if (this.default_properties[key] == undefined) {
+                result.push(this[key]);
+            }
+        }
+        return result;
     }
 }

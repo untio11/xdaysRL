@@ -1,6 +1,7 @@
 import { Mixin } from "./Mixin";
-import { Site, position } from '../World/Site';
+import { position } from '../World/Site';
 import { Entity } from "../Entities/Entity";
+import { Stats } from "./Stats";
 
 export const ID: string = 'Moveable';
 
@@ -17,6 +18,12 @@ export class Moveable implements Mixin {
         this.speed = properties.speed || 10;
         this.owner = owner;
         return this;
+    }
+
+    getStats() {
+        return {
+            speed: this.speed
+        };
     }
 
     /**
