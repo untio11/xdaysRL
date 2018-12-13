@@ -3,6 +3,7 @@ import { Damagable, ID as DamagableName } from "./Damagable";
 import { Vision, ID as VisionName } from "./Vision";
 import { AI, ID as AIName } from "./AI";
 import { Attack, ID as AttackName } from "./Attack";
+import { Levelable, ID as LevelableName } from "./Levelable";
 
 
 /**
@@ -13,5 +14,6 @@ export const Mixins: {[name: string]: any} = {
     [DamagableName]: Damagable,
     [VisionName]: Vision,
     [AIName]: AI,
-    [AttackName]: Attack
+    [AttackName]: Attack,
+    [LevelableName]: Levelable
 };

@@ -1,5 +1,5 @@
 import { Mixin } from "./Mixin";
-import { Entity } from "../Entities/Entity";
+import { Entity, entityTypes } from "../Entities/Entity";
 import { Stats } from "./Stats";
 import { EngineWrapper } from "../Engine/Engine";
 
@@ -78,5 +78,8 @@ export class Damagable implements Mixin {
     die() {
         // Drop items or something
         this.owner.getPos().site.remove(this.owner);
+        if (this.owner.type == entityTypes.Player) {
+            EngineWrapper.end();
+        }
     }
 }

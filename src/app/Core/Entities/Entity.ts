@@ -19,6 +19,7 @@ export abstract class Entity extends Glyph {
     protected mixins: MixinContainer;
     readonly id: number;
     protected static counter = 0;
+    readonly type: entityTypes;
 
     /**
      * Set the name position and glyph properties for this entity.
@@ -27,6 +28,7 @@ export abstract class Entity extends Glyph {
     constructor(properties: EntityProperties, site: Site) {
         super(properties);
         this.id = Entity.counter++;
+        this.type = properties.type;
         this.name = properties.name || "Placeholder";
         this.position = new position (
             properties.x || 0,
@@ -145,4 +147,12 @@ export interface EntityProperties extends GlyphProperties {
     y?: number;
     mixins: string[];
     mixin_options?: {[name: string]: {}}
+    type: entityTypes
+}
+
+export const enum entityTypes {
+    'Player' = 1,
+    'Enemy',
+    'Neutral',
+    'Passive'
 }

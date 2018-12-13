@@ -1,12 +1,16 @@
-export interface Stats {    
+export interface Stats {
+    constitution?: number; 
     hp?: number;
     max_hp?: number;
-    attack?: number;
+    strength?: number;
     exp?: number;
-    next_lvl_exp?: number;
+    nextlvl_exp?: number;
     lvl?: number;
-    defence?: number;
+    defense?: number;
+    agility?: number;
     speed?: number;
+    stealth?: number;
+    intelligence?: number;
     mana?: number;
     max_mana?: number;
     [stat_name: string]: Stats[keyof Stats];

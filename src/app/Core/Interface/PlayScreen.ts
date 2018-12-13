@@ -78,8 +78,8 @@ export class PlayScreen extends Screen {
 
         this.display.clear();
 
-        for (let x = topLeft.x; x < topLeft.x + site_width; x++) {
-            for (let y = topLeft.y; y < topLeft.y + site_height; y++) {
+        for (let x = topLeft.x; x < topLeft.x + screen_width; x++) {
+            for (let y = topLeft.y; y < topLeft.y + screen_height; y++) {
                 const tile = this.current_site.getTile({ x, y });
                 if (tile.explored) {
                     const in_vision = this.containsPoint(visibile_area, (x + ',' + y));

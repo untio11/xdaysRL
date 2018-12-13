@@ -78,9 +78,9 @@ export abstract class Site {
     }
 
     setExploredTile(pos: position | {x: number, y: number}) {
-        let {x, y} = pos;
         // Maybe check if it's actually a tile of the map.p
-        this.getTile({x, y}).explored = true;
+        let tile = this.getTile(pos);
+        if (tile != Tile.nullTile) tile.explored = true;
     }
 
     /** @returns A random tile containing a floor. */
