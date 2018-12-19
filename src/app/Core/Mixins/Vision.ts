@@ -2,7 +2,7 @@ import { Mixin } from "./Mixin";
 import { Entity } from "../Entities/Entity";
 import { FOV } from "rot-js";
 import { HashMap } from "../../util/DiscountHashmap";
-import { Stats } from "./Stats";
+import { DerivedStats } from "./Stats";
 
 export const ID: string = 'Vision';
 
@@ -22,7 +22,7 @@ export class Vision implements Mixin {
         properties = properties || {};
 
         this.owner = owner;
-        this.vision_radius = properties.vision_radius || 10;
+        this.vision_radius = Math.max((properties.vision_radius || 10) + owner.getAbilityMod().perception, 1);;
         this.x_ray = false;
         this.lightPasses = (x: number, y: number) => (
             this.owner.getPos().site.getTile({x, y}).light_passes || this.x_ray
@@ -30,7 +30,7 @@ export class Vision implements Mixin {
         this.fov = new FOV.RecursiveShadowcasting(this.lightPasses);
     }
 
-    getStats(): Stats {
+    getStats(): DerivedStats {
         return {};
     }
 

@@ -1,6 +1,6 @@
 import { Mixin } from "./Mixin";
 import { Entity, entityTypes } from "../Entities/Entity";
-import { Stats } from "./Stats";
+import { DerivedStats } from "./Stats";
 import { EngineWrapper } from "../Engine/Engine";
 
 export const ID: string = 'Damagable';
@@ -23,12 +23,12 @@ export class Damagable implements Mixin {
     constructor(owner: Entity, properties?: {starting_hp?: number, max_hp?: number}) {
         properties = properties || {};
         this.owner = owner;
-        this.health = properties.starting_hp || 10;
-        this.max_health = properties.max_hp || this.health;
+        this.max_health = Math.max((properties.max_hp || 10) + owner.getAbilityMod().constitution, 1);;
+        this.health = properties.starting_hp || this.max_health;
         this.targeted = false;
     }
 
-    getStats(): Stats {
+    getStats(): DerivedStats {
         return {
             hp: this.health,
             max_hp: this.max_health
@@ -73,6 +73,11 @@ export class Damagable implements Mixin {
 
     setTargeted(new_val: boolean) {
         this.targeted = new_val;
+    }
+
+    /**Should depend on the stats of the monster or something, but for now this is okay. */
+    giveExp() {
+        return 10;
     }
 
     die() {

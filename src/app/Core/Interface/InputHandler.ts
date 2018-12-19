@@ -93,7 +93,10 @@ class InputHandler {
                 break;
             case 'KeyA':
                 player.MixinProps(MixinNames.attack).updateTargetList();
-                if (player.MixinProps(MixinNames.attack).getTargets().length == 0) break;
+                if (player.MixinProps(MixinNames.attack).getTargets().length == 0) {
+                    EngineWrapper.should_unlock = false;
+                    break;
+                }
                 player.MixinProps(MixinNames.attack).getCurrentTarget();
                 player.MixinProps(MixinNames.attack).target();
                 this.switchMode(inputModes.Targeting);

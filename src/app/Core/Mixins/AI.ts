@@ -1,7 +1,6 @@
 import { Mixin } from "./Mixin";
 import { ID as MoveableName } from "./Moveable";
 import { Entity } from "../Entities/Entity";
-import { Stats } from "./Stats";
 
 export const ID: string = 'AI';
 
@@ -15,7 +14,7 @@ export class AI implements Mixin {
         return this;
     }
 
-    getStats(): Stats {
+    getStats() {
         return {};
     } 
 

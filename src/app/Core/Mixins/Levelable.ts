@@ -1,6 +1,6 @@
 import { Mixin } from "./Mixin";
 import { Entity } from "../Entities/Entity";
-import { Stats } from "./Stats";
+import { DerivedStats } from "./Stats";
 
 export const ID: string = 'Levelable';
 
@@ -29,17 +29,25 @@ export class Levelable implements Mixin {
         return this;
     }
 
-    getStats(): Stats {
+    getStats(): DerivedStats {
         return {
-            perception: this.perception,
-            strength: this.strength,
-            agility: this.agility,
-            constitution: this.constitution,
-            intelligence: this.intelligence,
             lvl: this.level,
             exp: this.exp,
             nextlvl_exp: this.nextLvlExp()
         };
+    }
+
+    getExp(exp: number) {
+        if (this.exp + exp >= this.nextLvlExp()) {
+            this.exp -= this.nextLvlExp();
+            this.levelUp();
+        }
+        this.exp += exp;
+    }
+
+    private levelUp() {
+        console.log("Leveled up");
+        this.level += 1;
     }
 
     private nextLvlExp(): number {

@@ -2,7 +2,8 @@ import { Mixin } from "./Mixin";
 import { Entity } from "../Entities/Entity";
 import { Vision } from "./Vision";
 import { ID as DamagableName} from "./Damagable";
-import { Stats } from "./Stats";
+import { DerivedStats } from "./Stats";
+import { ID as LevelableName } from "./Levelable";
 
 export const ID: string = 'Attack';
 
@@ -23,22 +24,25 @@ export class Attack implements Mixin {
         properties = properties || {};
         this.owner = owner;
         this.range = properties.range || 1;
-        this.damage = properties.damage || 5;
+        this.damage = Math.max((properties.damage || 1) + owner.getAbilityMod().strength, 1);
         this.range_computation = new Vision(owner, {vision_radius: this.range});
         this.targets = [];
         this.current_target = 0;
     }
 
-    getStats(): Stats {
+    getStats(): DerivedStats {
         return {
             attack: this.damage,
         };
     }
 
     attack(target: Entity) {
-        let damagable = target.MixinProps(DamagableName);
+        const damagable = target.MixinProps(DamagableName);
         damagable.decrementHp(this.damage);
         this.untarget();
+        if (damagable.getHp() == 0) {
+            this.owner.MixinProps(LevelableName).getExp(damagable.giveExp());
+        }
     }
 
     /** Update the target list by checking what entities are in range. */

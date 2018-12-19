@@ -1,5 +1,5 @@
 import { Entity } from "../Entities/Entity";
-import { Stats } from "./Stats";
+import { DerivedStats } from "./Stats";
 
 /**
  * Basic interface for every mixin.
@@ -9,5 +9,5 @@ export interface Mixin {
     readonly id: string;
     /** The entity it acts upon. */
     owner: Entity;
-    getStats(): Stats;
+    getStats(): DerivedStats;
 }

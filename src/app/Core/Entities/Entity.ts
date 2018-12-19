@@ -3,7 +3,7 @@ import { Mixins } from "../Mixins/Index";
 import { MixinContainer } from "../Mixins/MixinContainer";
 import { Site, position } from "../World/Site";
 import { MixinNames } from "../Mixins/MixinNames";
-import { Stats } from "../Mixins/Stats";
+import { BaseStats, DerivedStats } from "../Mixins/Stats";
 
 /**
  * Base class for all entities. Extends glyph because all entities are to be represented by a glyph.
@@ -20,6 +20,7 @@ export abstract class Entity extends Glyph {
     readonly id: number;
     protected static counter = 0;
     readonly type: entityTypes;
+    protected base_stats: BaseStats;
 
     /**
      * Set the name position and glyph properties for this entity.
@@ -35,6 +36,7 @@ export abstract class Entity extends Glyph {
             properties.y || 0,
             site
         );
+        this.base_stats = properties.base_stats;
 
         this.last_pos = new position (
             -1,
@@ -126,13 +128,21 @@ export abstract class Entity extends Glyph {
     }
 
     getStats() {
-        let result: Stats = {};
+        let result: DerivedStats = {};
         const mixins = this.mixins.getAll();
         for (const mixin of mixins) {
             const stats = mixin.getStats();
             for (const stat of Object.keys(stats)) {
                 result[stat] = stats[stat];
             }
+        }
+        return result;
+    }
+
+    getAbilityMod() {
+        let result: { [name: string]: number } = {};
+        for (const ability of Object.keys(this.base_stats)) {
+            result[ability] = Math.floor((this.base_stats[ability] - 10) / 2);
         }
         return result;
     }
@@ -146,8 +156,9 @@ export interface EntityProperties extends GlyphProperties {
     x?: number;
     y?: number;
     mixins: string[];
-    mixin_options?: {[name: string]: {}}
-    type: entityTypes
+    mixin_options?: {[name: string]: {}};
+    type: entityTypes;
+    base_stats: BaseStats;
 }
 
 export const enum entityTypes {

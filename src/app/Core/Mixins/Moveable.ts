@@ -1,7 +1,7 @@
 import { Mixin } from "./Mixin";
 import { position } from '../World/Site';
 import { Entity } from "../Entities/Entity";
-import { Stats } from "./Stats";
+import { DerivedStats } from "./Stats";
 
 export const ID: string = 'Moveable';
 
@@ -15,7 +15,7 @@ export class Moveable implements Mixin {
 
     constructor(owner: Entity, properties?: {speed?: number}) {
         properties = properties || {};
-        this.speed = properties.speed || 10;
+        this.speed = Math.max((properties.speed || 10) + owner.getAbilityMod().agility, 1);;
         this.owner = owner;
         return this;
     }

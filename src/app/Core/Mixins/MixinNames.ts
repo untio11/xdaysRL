@@ -4,6 +4,7 @@ import { ID as VisionName } from "./Vision";
 import { ID as AIName } from "./AI";
 import { ID as AttackName } from "./Attack";
 import { ID as LevelableName } from "./Levelable";
+import { ID as CasterName } from "./Caster";
 
 export const MixinNames = {
     moveable: MoveableName,
@@ -11,5 +12,6 @@ export const MixinNames = {
     vision: VisionName,
     ai: AIName,
     attack: AttackName,
-    levelable: LevelableName
+    levelable: LevelableName,
+    caster: CasterName
 };
