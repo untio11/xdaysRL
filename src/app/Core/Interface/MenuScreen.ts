@@ -26,11 +26,24 @@ export class MenuScreen extends Screen {
     render() {
         if (this.player == undefined) return;
         const stats = this.player.getStats();
-        const upper = this.dimensions.width - this.margin_right;
-        this.display.drawText(this.margin_left, 1, this.clean(this.player.name) + " (" + this.clean(stats.lvl) + "):" + this.gauge(stats.exp, stats.nextlvl_exp), upper)
-        this.display.drawText(this.margin_left, 2, "Health: " + this.gauge(stats.hp, stats.max_hp), upper);
-        this.display.drawText(this.margin_left, 3, "Mana: " + this.gauge(stats.mana, stats.max_mana), upper);
+        const ability_score = this.player.getAbilityScore();
+        const ability_mod = this.player.getAbilityMod();
 
+        let counter = 1; // Will keep track of what row to render the text on.
+        this.write(`${this.player.name}: ${stats.lvl} (${this.gauge(stats.exp, stats.nextlvl_exp)})`, counter++);
+        this.write("Health: " + this.gauge(stats.hp, stats.max_hp), counter++);
+        this.write("Mana: " + this.gauge(stats.mana, stats.max_mana), counter++);
+        counter++; // Newline :P
+        this.write("Str: " + this.clean(ability_score.strength) + ` (${ability_mod.strength})`, counter++);
+        this.write("Con: " + this.clean(ability_score.constitution) + ` (${ability_mod.constitution})`, counter++);
+        this.write("Agi: " + this.clean(ability_score.agility) + ` (${ability_mod.agility})`, counter++);
+        this.write("Int: " + this.clean(ability_score.intelligence) + ` (${ability_mod.intelligence})`, counter++);
+        this.write("Per: " + this.clean(ability_score.perception) + ` (${ability_mod.perception})`, counter++);
+    }
+
+    private write(data: string, row: number) {
+        const upper = this.dimensions.width - this.margin_right;
+        this.display.drawText(this.margin_left, row, data, upper);
     }
 
     private clean(data?: number | string): string {

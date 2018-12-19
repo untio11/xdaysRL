@@ -146,6 +146,10 @@ export abstract class Entity extends Glyph {
         }
         return result;
     }
+
+    getAbilityScore() {
+        return this.base_stats;
+    }
 }
 
 /**
