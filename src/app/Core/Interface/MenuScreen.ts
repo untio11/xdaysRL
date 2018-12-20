@@ -39,6 +39,9 @@ export class MenuScreen extends Screen {
         this.write("Agi: " + this.clean(ability_score.agility) + ` (${ability_mod.agility})`, counter++);
         this.write("Int: " + this.clean(ability_score.intelligence) + ` (${ability_mod.intelligence})`, counter++);
         this.write("Per: " + this.clean(ability_score.perception) + ` (${ability_mod.perception})`, counter++);
+        counter++;
+        const wielding = this.player.getWielding();
+        this.write(`Wielding: ${this.clean(wielding == undefined ? "None" : wielding.toString())}`, counter++);
     }
 
     private write(data: string, row: number) {

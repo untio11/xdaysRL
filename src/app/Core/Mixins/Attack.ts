@@ -4,6 +4,7 @@ import { Vision } from "./Vision";
 import { ID as DamagableName} from "./Damagable";
 import { DerivedStats } from "./Stats";
 import { ID as LevelableName } from "./Levelable";
+import { Potion } from "../Items/Potion";
 
 export const ID: string = 'Attack';
 
@@ -14,8 +15,6 @@ export class Attack implements Mixin {
     private range: number;
     /** The amount of damage this attack does */
     private damage: number;
-    /** Use the vision mixin to compute what targets are in range. */
-    private range_computation: Vision;
     /** List of potential targets. */
     private targets: Entity[];
     private current_target: number;
@@ -25,7 +24,6 @@ export class Attack implements Mixin {
         this.owner = owner;
         this.range = properties.range || 1;
         this.damage = Math.max((properties.damage || 1) + owner.getAbilityMod().strength, 1);
-        this.range_computation = new Vision(owner, {vision_radius: this.range});
         this.targets = [];
         this.current_target = 0;
     }
@@ -36,9 +34,10 @@ export class Attack implements Mixin {
         };
     }
 
-    attack(target: Entity) {
+    attack(target: Entity, weapon?: Potion) {
         const damagable = target.MixinProps(DamagableName);
-        damagable.decrementHp(this.damage);
+        const damage = (weapon != undefined) ? weapon.getDamage() : this.damage;
+        damagable.decrementHp(damage);
         this.untarget();
         if (damagable.getHp() == 0) {
             this.owner.MixinProps(LevelableName).getExp(damagable.giveExp());
@@ -46,9 +45,10 @@ export class Attack implements Mixin {
     }
 
     /** Update the target list by checking what entities are in range. */
-    updateTargetList() {
+    updateTargetList(weapon?: Potion) {
         this.targets = [];
-        const in_range = this.range_computation.getVisibileArea();
+        const range_computation = new Vision(this.owner, { vision_radius: weapon != undefined ? 10 + this.owner.getAbilityMod().strength : this.range });
+        const in_range = range_computation.getVisibileArea();
         // Only select things that can be damaged and don't target yourself.
         const possible_targets = this.owner.getPos().site.getEntities(in_range);
         for (const id of Object.keys(possible_targets)) {

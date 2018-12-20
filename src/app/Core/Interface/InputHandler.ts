@@ -91,8 +91,14 @@ class InputHandler {
                 player.MixinProps(MixinNames.attack).attack(player);
                 EngineWrapper.should_unlock = false;
                 break;
+            case 'BracketLeft':
+                player.switchWielding(player.previousItem());
+                break;
+            case 'BracketRight':
+                player.switchWielding(player.nextItem());
+                break;
             case 'KeyA':
-                player.MixinProps(MixinNames.attack).updateTargetList();
+                player.MixinProps(MixinNames.attack).updateTargetList(player.getWielding());
                 if (player.MixinProps(MixinNames.attack).getTargets().length == 0) {
                     EngineWrapper.should_unlock = false;
                     break;
@@ -126,7 +132,7 @@ class InputHandler {
                 break;
             case 'Enter':
                 let target = player.MixinProps(MixinNames.attack).getCurrentTarget();
-                player.MixinProps(MixinNames.attack).attack(target);
+                player.MixinProps(MixinNames.attack).attack(target, player.getWielding());
                 this.switchMode(inputModes.OverWorld);
                 EngineWrapper.should_unlock = true;
                 break;
