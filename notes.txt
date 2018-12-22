@@ -1,0 +1,16 @@
+* for npc engine stopping the engine: Hero.act() stops the engine. handleInput should start the engine again
+- Rewrite the renderer to only draw limited stuff (for blinking cursor)
+- Throwable items / weapons
+* Base stats for a player (with levels)
+* Don't use object.keys for gathering all mixins!
+- Make sure the game actually ends when the player dies (there's still a ref in the screen focus)
+* This.nextlevelexp() in getstats might be an issue
+- Potions are to be discovered and catalogued in a potionbook. This book persists between playthroughs(?)
+- Naming potions yourself in your potionbook could be fun.
+* Negative ability modifyer allows for 0 damage attacks.
+- Implementing inventory: maybe separate potion inventory
+- Dead enemies leave shadows in out of vision areas.
+
+|=
+Encounter with a 'poor' street thug: Dastan Baruch.
+Some dnd shizz: maybe a street thug trying to rob us. Maybe to get money to save his family that was threathened by one of the stakeholders of the harbour, [ATK]. His family, surnamed Baruch, was the owner of some ships in the harbour and they partook in some regular trading with the neighbouring towns. The current head of the Baruch family, Linley, was pretty happy with how buisiness was going, as they were pretty well off. [ATK], however, decided that they wanted more power in the harbour and that the best way to get that was by owning some of the trade ships and routes. So they targeted the Baruch families assets. First kidnapping Linley and his wife Dalia, murdering their youngest son and. Dastan, the oldest son of the family head, was utterly terrified from experiencing all this and he begged and pleaded to spare his parents' life. [ATK] decided to humour Dastan and they let him away saying he could save his parents if he paid them 15000 GP. This is of course a lie, but Dastan is a somewhat naive kid and [ATK] is a cruel person. Dastan therefore decided to start robbing people on the street, and that is how he encountered us here.
